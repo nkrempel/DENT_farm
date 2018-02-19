@@ -17,7 +17,12 @@ class App extends Component {
     return (
       <Router><div className="App">
           <div className="row">
-            <div class="col-12 " >
+            <div class="col-3 " >
+              <img style={{height: '32vh', width: '20vw'}} src={require('./images/chicken-thumbs-up.jpg')} />
+             
+            </div>
+            <div class="col-9 align-self-center" >
+              
               <h1>The Farmer and Del's Egg Tracker</h1>
             </div>  
           </div>

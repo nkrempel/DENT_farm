@@ -1,7 +1,9 @@
 
 
 const initialState = {
-    products: []
+    workers: [],
+    orders: [],
+    trackerEntries: []
 }
 
 const reducer = (state = initialState, action) => {
