@@ -10,7 +10,9 @@ import './App.css';
 class Workers extends Component {
     render() {
         return (
+            <div className="card">
             <h1>This is the placeholder for the Workers view</h1>
+            </div>
         )
     }
 }

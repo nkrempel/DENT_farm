@@ -1,7 +1,28 @@
 .App {
   text-align: center;
+  background-image: url('./images/rustic-barn-wood-wallpaper.jpg');
+  /* background-color: bisque; */
+  
+
+  height: 100vh;
 }
 
 .navMenu li {
   list-style: none;
+  display: flex;
+  justify-content: flex-start;
+}
+
+
+.App-header {
+  padding: 20px; 
+  opacity: 0.8;
+}
+
+.App-title {
+  font-family: Goudy Old Style;
+  font-size: 200%;
+  display: flex;
+  color: rgb(19, 19, 90);
+  align-content: flex-start;
 }

@@ -12,32 +12,33 @@ import Orders from './Orders';
 import Workers from './Workers';
 import './App.css';
 
+
 class App extends Component {
   render() {
     return (
       <Router><div className="App">
           <div className="row">
-            <div class="col-3 " >
-              <img style={{height: '32vh', width: '20vw'}} src={require('./images/chicken-thumbs-up.jpg')} />
+            <div className="col-3 " >
+              <img style={{height: '32vh', width: '20vw'}} className="figure-img img-fluid rounded" src={require('./images/chicken-thumbs-up.jpg')} />
              
             </div>
-            <div class="col-9 align-self-center" >
-              
-              <h1>The Farmer and Del's Egg Tracker</h1>
+            <div className="align-self-center" >
+              <h1 className="card text-xl-center rounded">The Farmer and Del's Egg Tracker</h1>
+              {/* <h1><span class="badge badge-secondary">The Farmer and Del's Egg Tracker</span></h1> */}
             </div>  
           </div>
           <div className="row">
-            <div class="col-3 " >
-            <ul className="navMenu">
-            <li><NavLink to="/">Home</NavLink></li>
-              <li><NavLink to="/workers">Meet the Workers</NavLink></li>
-              <li><NavLink to="/tracker">Daily Tracker</NavLink></li>
-              <li><NavLink to="/inventory">Current Inventory</NavLink></li>
-              <li><NavLink to="/orders">Orders</NavLink></li>
+            <div className="rounded card-body col-3 " >
+            <ul className="list-group list-group-flush navMenu">
+              <li className="list-group-item"><NavLink to="/">Home</NavLink></li>
+              <li className="list-group-item"><NavLink to="/workers">Meet the Workers</NavLink></li>
+              <li className="list-group-item"><NavLink to="/tracker">Daily Tracker</NavLink></li>
+              <li className="list-group-item"><NavLink to="/inventory">Current Inventory</NavLink></li>
+              <li className="list-group-item"><NavLink to="/orders">Orders</NavLink></li>
               
             </ul>
             </div>
-            <div class="col-9 " >
+            <div className="col-9 " >
               <Route exact path="/" component={Home} />
               <Route path="/workers" component={Workers} />
               <Route path="/tracker" component={Tracker} />
