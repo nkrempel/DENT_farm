@@ -1,10 +1,35 @@
 import {
   POST_ORDER,
   LOAD_ORDERS,
-  LOAD_WORKERS
+  GET_ORDERS,
+  LOAD_WORKERS,
+  LOAD_TRANSACTIONS
 } from './types';
 import axios from 'axios';
 
+export const addEggs = (payload) => {
+    console.log("made it to add Eggs ")
+    return (dispatch, getState, url) => {
+        axios.post(`${url}transactions`, payload)
+    }
+  }
+  
+  export const fetchTransactions = () => {
+  
+    return (dispatch, getState, url) => {
+      axios.get(`${url}transactions`)
+        .then(({ data }) => {
+          dispatch(loadTransactions(data));
+        })
+    }
+  }
+  
+  export function loadTransactions(payload){
+     return {
+     type: 'LOAD_TRANSACTIONS',
+     payload
+     }
+  }
 export const fetchWorkers = () => {
 
     return (dispatch, getState, url) => {
