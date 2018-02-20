@@ -6,3 +6,5 @@ export const POST_ORDER = 'Creates a new order';
 export const LOAD_ORDERS = 'Loads orders from mock api to state';
 export const GET_ORDERS = 'Gets orders from mock api';
 export const LOAD_TRANSACTIONS = 'Gets list of transactions'
+export const ADD_EGGS = 'Creates a new transaction';
+export const PUT_ORDER = 'Updates an order';

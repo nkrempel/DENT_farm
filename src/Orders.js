@@ -6,7 +6,7 @@ import {
   NavLink
 } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postOrder, getOrders } from './state/actions';
+import { postOrder, getOrders, putOrder} from './state/actions';
 import './App.css';
 
 class Orders extends Component {
@@ -14,14 +14,15 @@ class Orders extends Component {
     super(props)
 
     this.state = {
+      status: 'Open',
       reference: '',
       type: 'Chicken',
-      count: 0
+      count: 6
     }
 
     this.onSubmit = this.onSubmit.bind(this)
     this.onInputChange = this.onInputChange.bind(this)
-
+    this.onAction = this.onAction.bind(this)
   }
 
   componentDidMount() {
@@ -35,18 +36,24 @@ class Orders extends Component {
 
   onSubmit(e) {
     e.preventDefault()
-    this.props.postOrder({ reference: this.state.reference, type: this.state.type, count: this.state.count })
+    this.props.postOrder({ status: this.state.status, reference: this.state.reference, type: this.state.type, count: this.state.count })
+    this.setState({ reference: '', type: 'Chicken', count: 6 })
+  }
+
+  onAction(e) {
+    e.preventDefault()
+    this.props.putOrder({ id: e.target.id, status: e.target.name })
   }
 
   render() {
     return (
       <form onSubmit={this.onSubmit}>
-        <div class="container">
+        <div className="container">
           <div className="row">
-            <div className="col-sm-8">
-              <div class="card text-white bg-primary">
-                <div class="card-body">
-                  <h5 class="card-title">Enter order details:</h5>
+            <div className="col-sm-9">
+              <div className="card text-white bg-primary">
+                <div className="card-body">
+                  <h5 className="card-title">Enter order details:</h5>
                   <div className="col-sm-4"></div>
                   <div className="row">
                     <div className="col-sm-4">
@@ -72,7 +79,7 @@ class Orders extends Component {
                       <label for="eggCountId">Egg count:</label>
                     </div>
                     <div className="col-sm-4">
-                      <input type="number" min="6" placeholder="Multiples of 6" step="6" name="count" id="eggCountId" required onChange={this.onInputChange}></input>
+                      <input type="number" min="6" placeholder="Multiples of 6" step="6" name="count" id="eggCountId" value={this.state.count} required onChange={this.onInputChange}></input>
                     </div>
                   </div>
                   <div className="col-sm-11">
@@ -85,21 +92,23 @@ class Orders extends Component {
           </div>
         </div>
 
-        <div class="container">
+        <div className="container">
           <div className="row">&nbsp;</div>
           <div className="row">
-            <div className="col-sm-8">
-              <div class="card text-blue border-primary">
-                <div class="card-body">
-                  <h5 class="card-title">Existing Order Details</h5>
-                  <table class="table table-striped">
+            <div className="col-sm-9">
+              <div className="card text-blue border-primary">
+                <div className="card-body">
+                  <h5 className="card-title">Existing Order Details</h5>
+                  <table className="table table-striped">
                     <thead>
                       <tr>
                         <th scope="col">Order#</th>
                         <th scope="col">Ordered</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Cust Ref</th>
                         <th scope="col">Type</th>
                         <th scope="col">Count</th>
+                        <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -111,9 +120,15 @@ class Orders extends Component {
                           <tr key={idx}>
                             <th scope="row">{order.id}</th>
                             <td>{dspMonth} {dspDay}, {dspYear}, {dspHour}:{dspMins}:{dspSecs} {dspAMPM}</td>
+                            <td>{order.status}</td>
                             <td>{order.reference}</td>
                             <td>{order.type}</td>
                             <td>{order.count}</td>
+                            {order.status === 'Open' ?
+                              < td > <button id={order.id} className="btn btn-primary" name="Completed" onClick={this.onAction} >Complete</button>
+                                <button id={order.id} className="btn btn-warning" name="Canceled" onClick={this.onAction} >Cancel</button>
+                              </td> : <td>&nbsp;</td>
+                            }
                           </tr>
                         )
                       })
@@ -144,7 +159,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     getOrders: function () {
       dispatch(getOrders())
-    }
+    },
+    putOrder: function (payload) {
+      dispatch(putOrder(payload))
+    },
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Orders);
