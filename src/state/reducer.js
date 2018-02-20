@@ -1,12 +1,10 @@
-import { 
-    LOAD_WORKERS,
-    LOAD_ORDERS
- } from "./types";
+import { LOAD_ORDERS } from "./types";
 
 const initialState = {
     workers: [],
     orders: [],
-    trackerEntries: []
+    trackerEntries: [],
+    
 }
 
 const reducer = (state = initialState, action) => {
@@ -15,6 +13,8 @@ const reducer = (state = initialState, action) => {
             return {...state, workers: action.payload}
       case LOAD_ORDERS: 
         return {...state, orders: action.payload }
+      case GET_INVENTORY: 
+        return {...state, transactions: action.payload }
       default:
           return state;
     }

@@ -1,7 +1,6 @@
 import {
   POST_ORDER,
   LOAD_ORDERS,
-  GET_ORDERS,
   LOAD_WORKERS
 } from './types';
 import axios from 'axios';
@@ -42,9 +41,24 @@ export const getOrders = () => {
       })
   }
 }
+export const getEggs = () => {
+
+  return (dispatch, getState, url) => {
+    axios.get(`${url}transactions`)
+      .then(({ data }) => {
+        dispatch(loadInventory(data));
+      })
+  }
+}
 const loadOrders = payload => {
   return {
     type: LOAD_ORDERS,
+    payload
+  }
+}
+const loadInventory = payload => {
+  return {
+    type: GET_INVENTORY,
     payload
   }
 }

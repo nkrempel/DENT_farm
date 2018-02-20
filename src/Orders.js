@@ -39,6 +39,7 @@ class Orders extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <form onSubmit={this.onSubmit}>
         <div class="container">

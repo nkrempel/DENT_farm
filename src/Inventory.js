@@ -4,17 +4,57 @@ import {
   Link,
   Route,
   NavLink
+  NavLink,
 } from 'react-router-dom';
 import './App.css';
+import { connect } from 'react-redux';
+import axios from 'axios'
+
+const mockAPI = 'http://5a8b1a993d92490012370bca.mockapi.io/'
 
 class Inventory extends Component {
-    render() {
-        return (
-            <div className="card">
-
-            <h1>This is the placeholder for the Inventory view</h1>
-            </div>
-        )
+  constructor(props) {
+    super(props);
+    this.state = {
+        Inventory: []
     }
+  }
+
+
+  componentDidMount(){
+      this.getEggs()
+  }
+
+  getEggs(){
+      axios.get(`${mockAPI}`).then(({data}) =>
+      this.setState({Inventory : data })
+      
+    )
+  }
+
+  render() {
+      console.log(this.state)
+    return (
+      <div className="card">
+       {this.props.getEggs[0]
+       }
+      </div>
+    );
+  }
 }
 export default Inventory;
+
+const mapStateToProps = ({ transactions }) => {
+  return {
+    transactions: transactions
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getEggs: function() {
+        dispatch(this.getEggs())
+    }
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Inventory);
