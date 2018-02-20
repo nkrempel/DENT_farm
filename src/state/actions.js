@@ -84,7 +84,7 @@ export const putOrder = (orderObj) => {
     axios.put(`${url}orders/${orderObj.id}`, orderObj)
       .then(({ data }) => {
         if(data.status === 'Completed') {
-          dispatch(addEggs({ transType: 'Order', typeId: data.id, eggCount: data.count, transactionNotes: `Order ${data.status}` }))
+          dispatch(postTransaction({ transType: 'Order', typeId: data.id, eggCount: data.count, transactionNotes: `Order ${data.status}` }))
         }  
         dispatch(getOrders());
       })
