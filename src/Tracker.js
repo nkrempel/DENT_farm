@@ -21,13 +21,16 @@ class Tracker extends Component {
         this.state = {
             eggs: 0,
             eggType: '',
-            workerID: ''
+            workerID: '',
+            notes: ''
         }
 
-        this.handleChange = this.handleChange.bind(this)
-        this.handleChangeType = this.handleChangeType.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
-        this.handleWorkerSelect = this.handleWorkerSelect.bind(this)
+        this.handleChange = this.handleChange.bind(this);
+        this.handleChangeType = this.handleChangeType.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleWorkerSelect = this.handleWorkerSelect.bind(this);
+        this.handleSubmitNote = this.handleSubmitNote.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
@@ -45,17 +48,18 @@ class Tracker extends Component {
         let workerSelect = this.props.workers.find((obj) => { return e.target.value === obj.id })
         this.setState({ workerID: workerSelect.id })
     }
-
+    handleSubmitNote(e){
+        this.setState({notes: (e.target.value)})
+    }
     handleSubmit(e) {
-        e.preventDefault()
-        let transaction
-
+        e.preventDefault();
+        this.props.postTransaction({transType: 'Collect', typeId: this.state.workerID, eggCount: this.state.eggs, transactionNotes: this.state.notes})
     }
 
     render() {
         return (
             <div>
-                <form>
+                <form className="form-body">
                     <div className="form-row">
                         <div className="form-group col-md-6">
                             <label htmlFor="exampleFormControlSelect1">Type of Egg</label>
@@ -77,7 +81,7 @@ class Tracker extends Component {
                             <label htmlFor="exampleFormControlSelect1">Worker</label>
                             <select className="form-control" id="exampleFormControlSelect3" onSubmit={this.handleWorkerSelect}>
                                 {this.props.workers.map((worker) => {
-                                    if (worker.workerType === "workerType 2") {
+                                    if (worker.workerType === "duck") {
                                         return (
                                             <option key={worker.id} value={worker.id}>{worker.name}</option>
                                         )
@@ -95,9 +99,9 @@ class Tracker extends Component {
                     </div>
                     <div className="form-group">
                         <label htmlFor="exampleFormControlTextarea1">Notes</label>
-                        <textarea className="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+                        <textarea className="form-control" id="exampleFormControlTextarea1" rows="2" onSubmit={this.handleSubmitNote}></textarea>
                     </div>
-                    <button type="button" type="submit" className="btn btn-primary"
+                    <button type="button" className="btn btn-primary"
                         onClick={this.handleSubmit}
                     >Submit</button>
                 </form>
@@ -115,7 +119,8 @@ class Tracker extends Component {
                         </thead>
                         <tbody>
                             {this.props.transactions.map((transaction) => {
-                                if (this.props.transaction.transType === "add") {
+                                if (transaction.transType === "Collect") {
+                                    {console.log(this.props.workers)}
                                     let worker = this.props.workers.find((obj) => { return transaction.typeId === obj.id })
                                     return (
                                         <tr>
@@ -152,9 +157,4 @@ const mapDispatchToProps = dispatch => {
         fetchTransactions: () => dispatch(fetchTransactions())
     }
 }
-//map state to props
-//map dispatch to props
-//to fetch workers
-//to fetch transactions
-//also to add eggs
 export default connect(mapStateToProps, mapDispatchToProps)(Tracker);

@@ -11,22 +11,24 @@ import {
 import axios from 'axios';
 
 export const postTransaction = (payload) => {
+    //console.log("made it to postTransaction");
   return (dispatch, getState, url) => {
     axios.post(`${url}transactions`, payload)
       .then(({data}) => {
         dispatch(fetchTransactions());
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
       })
   }
 }
 
 export const fetchTransactions = () => {
-
+    //console.log("made it to fetchTransactions")
   return (dispatch, getState, url) => {
     axios.get(`${url}transactions`)
       .then(({ data }) => {
+          //console.log(data)
         dispatch(loadTransactions(data));
       })
   }
