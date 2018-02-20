@@ -5,6 +5,11 @@ import {
     Route,
     NavLink
 } from 'react-router-dom';
+import {
+    addEggs,
+    fetchWorkers,
+    fetchTransactions
+} from './state/actions'
 import './App.css';
 import { connect } from 'react-redux';
 import { addEggs } from './state/actions';
@@ -12,7 +17,7 @@ import { fetchTransactions } from './state/actions';
 import { fetchWorkers } from './state/actions';
 
 class Tracker extends Component {
-    constructor() {
+    constructor(props) {
         super(props);
         this.state = {
             eggs: 0
