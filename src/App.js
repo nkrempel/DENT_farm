@@ -17,17 +17,17 @@ class App extends Component {
     return (
       <Router><div className="App">
           <div className="row">
-            <div class="col-3 " >
+            <div className="col-3 " >
               <img style={{height: '32vh', width: '20vw'}} src={require('./images/chicken-thumbs-up.jpg')} />
              
             </div>
-            <div class="col-9 align-self-center" >
+            <div className="col-9 align-self-center" >
               
               <h1>The Farmer and Del's Egg Tracker</h1>
             </div>  
           </div>
           <div className="row">
-            <div class="col-3 " >
+            <div className="col-3 " >
             <ul className="navMenu">
             <li><NavLink to="/">Home</NavLink></li>
               <li><NavLink to="/workers">Meet the Workers</NavLink></li>
@@ -37,7 +37,7 @@ class App extends Component {
               
             </ul>
             </div>
-            <div class="col-9 " >
+            <div className="col-9 " >
               <Route exact path="/" component={Home} />
               <Route path="/workers" component={Workers} />
               <Route path="/tracker" component={Tracker} />
