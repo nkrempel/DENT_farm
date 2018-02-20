@@ -5,7 +5,8 @@ import {
   LOAD_WORKERS,
   LOAD_TRANSACTIONS,
   POST_TRANSACTION,
-  PUT_ORDER
+  PUT_ORDER,
+  GET_INVENTORY
 } from './types';
 import axios from 'axios';
 
