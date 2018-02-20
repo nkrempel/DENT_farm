@@ -93,12 +93,12 @@ class Orders extends Component {
           </div>
         </div>
 
-        <div className="container">
+        <div className="ordersCtn">
           <div className="row">&nbsp;</div>
           <div className="row">
             <div className="col-sm-9">
               <div className="card text-blue border-primary">
-                <div className="card-body">
+                <div className="orders-card-body">
                   <h5 className="card-title">Existing Order Details</h5>
                   <table className="table table-striped">
                     <thead>
