@@ -7,6 +7,9 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import { connect } from 'react-redux';
+import { addEggs } from './state/actions';
+import { fetchTransactions } from './state/actions';
+import { fetchWorkers } from './state/actions';
 
 class Tracker extends Component {
     constructor() {
@@ -90,11 +93,11 @@ class Tracker extends Component {
                            return(
                             <tr>
                                 <th scope="row">{transaction.transId}</th>
-                                <td>Chicken</td>
+                                <td>{worker}</td>
                                 <td>{transaction.transType}</td>
-                                <td>Henrietta</td>
+                                <td>{worker}</td>
                                 <td>{transaction.eggCount}</td>
-                                <td>Test note</td>
+                                <td>{transaction.notes}</td>
                             </tr>
                            )}}
                         )}
