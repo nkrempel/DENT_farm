@@ -8,7 +8,8 @@ import {
     NavLink
 } from 'react-router-dom';
 import {
-    fetchWorkers
+    fetchWorkers,
+    addWorker
 } from './state/actions';
 import Worker from './Worker';
 import './App.css';
@@ -58,11 +59,13 @@ class Workers extends Component {
             this.state.newWorkerBreed,
             this.state.newWorkerPurchaseDate,
             this.state.newWorkerEggColor,
-            this.state.newWorkerType,
+            this.state.newWorkerPrimaryResponsibility,
             this.state.newWorkerImageURL,
             'Female'
         )
         console.log(newWorker)
+        this.props.addWorker(newWorker)
+        this.setState(initialState)
     }
 
     handleShowAddWorker(e) {
@@ -82,17 +85,25 @@ class Workers extends Component {
         this.props.fetchWorkerData()
     }
 
+    componentDidUpdate() {
+        //this.props.fetchWorkerData()
+    }
+
 
     render() {
         return (
             <div>
                 <h1>Meet the Workers!</h1>
+                {this.props.isLoading ? (
+                    <img style={{width: '300px', height: '150px'}}src={require('./images/egg_loader.gif')}/>
+                ) : (
+                <div>
                 <button onClick={this.handleShowAddWorker} className="btn btn-primary">Add Worker</button>
                 <div className="row">
                     {this.props.workers.map((worker) => (
                         <div key={worker.id} className="col-sm-4">
                             <div className="card" style={{ width: '18rem' }}>
-                                <img className="card-img" src={`https://picsum.photos/200/200?image=${Math.floor(Math.random() * 1000)}`} alt="Card image cap" />
+                                <img className="card-img" style={{width: '300px', height: '250px'}} src={worker.imageURL} alt="Card image cap" />
                                 <div className="card-img-overlay">
                                     <h1 className="card-body">{worker.name}</h1>
 
@@ -102,7 +113,9 @@ class Workers extends Component {
 
                             </div>
                         </div>))}
-                </div>
+                        
+                    </div>
+                </div>)}
                 <ReactModal
                     isOpen={this.state.showDetailModal}
                     ariaHideApp={false}
@@ -116,7 +129,7 @@ class Workers extends Component {
                     <h2>Egg Color:</h2> <p>{this.state.selectedWorker.eggColor}</p>
                     <h2>Purchased Date:</h2> <p>{this.state.selectedWorker.purchaseDate}</p>
                     <h2>Primary Responsibility:</h2> <p>{this.state.selectedWorker.workerType}</p>
-                    <img src={`https://picsum.photos/200/200?image=${Math.floor(Math.random() * 1000)}`} alt="Card image cap" />
+                    <img src={this.state.selectedWorker.imageURL} alt="Card image cap" />
                     <button className="btn btn-primary" onClick={() => { this.setState({ showDetailModal: false }) }}>Back to List</button>
                 </ReactModal>
                 <ReactModal
@@ -182,13 +195,15 @@ class Workers extends Component {
 
 const mapStateToProps = state => {
     return {
-                        workers: state.workers
+        workers: state.workers,
+        isLoading: state.isLoading
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-                        fetchWorkerData: () => dispatch(fetchWorkers())
+        fetchWorkerData: () => dispatch(fetchWorkers()),
+        addWorker: (worker) => dispatch(addWorker(worker))
     }
 }
 

@@ -6,7 +6,8 @@ import {
   LOAD_TRANSACTIONS,
   POST_TRANSACTION,
   PUT_ORDER,
-  GET_INVENTORY
+  GET_INVENTORY,
+  IS_LOADING
 } from './types';
 import axios from 'axios';
 
@@ -39,13 +40,14 @@ export function loadTransactions(payload) {
   }
 }
 export const fetchWorkers = () => {
-
   return (dispatch, getState, url) => {
+    dispatch(isLoading(true))
     axios.get(`http://5a8b1a993d92490012370bca.mockapi.io/workers`)
 
       .then(({ data }) => {
         console.log(data)
         dispatch(loadWorkers(data))
+        dispatch(isLoading(false))
       })
   }
 }
@@ -104,5 +106,23 @@ export const putOrder = (orderObj) => {
         }  
         dispatch(getOrders());
       })
+  }
+}
+
+export const addWorker = (workerObj) => {
+  return (dispatch, getState, url) => {
+    dispatch(isLoading(true))
+    axios.post(`http://5a8b1a993d92490012370bca.mockapi.io/workers`, workerObj)
+    .then(({data}) =>{
+      console.log(data)
+      dispatch(fetchWorkers)
+      dispatch(isLoading(false))
+    })
+  }
+}
+
+const isLoading = (payload) => {
+  return {
+    type: IS_LOADING, payload
   }
 }
