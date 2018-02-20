@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Link,
   Route,
-  NavLink
   NavLink,
 } from 'react-router-dom';
 import './App.css';
@@ -42,7 +41,6 @@ class Inventory extends Component {
     );
   }
 }
-export default Inventory;
 
 const mapStateToProps = ({ transactions }) => {
   return {
