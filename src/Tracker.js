@@ -6,82 +6,103 @@ import {
     NavLink
 } from 'react-router-dom';
 import {
-    addEggs,
+    postTransaction,
     fetchWorkers,
     fetchTransactions
-} from './state/actions'
+} from './state/actions';
 import './App.css';
 import { connect } from 'react-redux';
-import { addEggs } from './state/actions';
-import { fetchTransactions } from './state/actions';
-import { fetchWorkers } from './state/actions';
+import { transaction } from './Transaction';
+
 
 class Tracker extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            eggs: 0
+            eggs: 0,
+            eggType: '',
+            workerID: ''
         }
 
         this.handleChange = this.handleChange.bind(this)
+        this.handleChangeType = this.handleChangeType.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleWorkerSelect = this.handleWorkerSelect.bind(this)
     }
 
-    handleChange(e){
-        this.setState({eggs: parseInt(e.target.value)})
+    componentDidMount() {
+        //console.log(this.props)
+        this.props.fetchWorkers()
+        this.props.fetchTransactions()
+    }
+    handleChange(e) {
+        this.setState({ eggs: parseInt(e.target.value) })
+    }
+    handleChangeType(e) {
+        this.setState({ eggType: (e.target.value) })
+    }
+    handleWorkerSelect(e) {
+        let workerSelect = this.props.workers.find((obj) => { return e.target.value === obj.id })
+        this.setState({ workerID: workerSelect.id })
+    }
+
+    handleSubmit(e) {
+        e.preventDefault()
+        let transaction
+
     }
 
     render() {
         return (
             <div>
                 <form>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="exampleFormControlSelect1">Type of Egg</label>
-                            <select class="form-control" id="exampleFormControlSelect1">
+                    <div className="form-row">
+                        <div className="form-group col-md-6">
+                            <label htmlFor="exampleFormControlSelect1">Type of Egg</label>
+                            <select className="form-control" id="exampleFormControlSelect1" onChange={this.handleChangeType}>
                                 <option>Chicken</option>
                                 <option>Duck</option>
                             </select>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="exampleFormControlSelect1">Transaction Type</label>
-                            <select class="form-control" id="exampleFormControlSelect2">
+                        <div className="form-group col-md-6">
+                            <label htmlFor="exampleFormControlSelect1">Transaction Type</label>
+                            <select className="form-control" id="exampleFormControlSelect2">
                                 <option>Add</option>
                                 {/* <option>Remove</option> */}
                             </select>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="exampleFormControlSelect1">Worker</label>
-                            <select class="form-control" id="exampleFormControlSelect3">
+                    <div className="form-row">
+                        <div className="form-group col-md-6">
+                            <label htmlFor="exampleFormControlSelect1">Worker</label>
+                            <select className="form-control" id="exampleFormControlSelect3" onSubmit={this.handleWorkerSelect}>
                                 {this.props.workers.map((worker) => {
-                                    if (this.props.workers.workerType === "layer"){
-                                        return(
-                                            <option>{worker.name}</option>
-                                        )}
-                                    })
+                                    if (worker.workerType === "workerType 2") {
+                                        return (
+                                            <option key={worker.id} value={worker.id}>{worker.name}</option>
+                                        )
+                                    }
+                                })
                                 }
-                                {/* <option>Chicken</option>
-                                <option>Duck</option> */}
                             </select>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="exampleFormControlSelect1">Transaction Amount</label>
-                            <input type="number" class="form-control" id="exampleFormControlSelect"
-                            onChange={this.handleChange}>
+                        <div className="form-group col-md-6">
+                            <label htmlFor="exampleFormControlSelect1">Transaction Amount</label>
+                            <input type="number" className="form-control" id="exampleFormControlSelect"
+                                onChange={this.handleChange}>
                             </input>
                         </div>
-                    </div>                   
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1">Notes</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
                     </div>
-                    <button type="button" type="submit" class="btn btn-primary"
-                    onClick = {(e) => {e.preventDefault(); this.props.addEggs(this.state.eggs)}}
-                    >Submit</button>                    
+                    <div className="form-group">
+                        <label htmlFor="exampleFormControlTextarea1">Notes</label>
+                        <textarea className="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+                    </div>
+                    <button type="button" type="submit" className="btn btn-primary"
+                        onClick={this.handleSubmit}
+                    >Submit</button>
                 </form>
                 <div className="display-table">
-                    <table class="table table-striped table-bordered">
+                    <table className="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th scope="col">Transaction ID</th>
@@ -93,19 +114,22 @@ class Tracker extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                        {this.props.transactions.map((transaction) => {
-                            if(this.props.transaction.transType === "add"){
-                           return(
-                            <tr>
-                                <th scope="row">{transaction.transId}</th>
-                                <td>{worker}</td>
-                                <td>{transaction.transType}</td>
-                                <td>{worker}</td>
-                                <td>{transaction.eggCount}</td>
-                                <td>{transaction.notes}</td>
-                            </tr>
-                           )}}
-                        )}
+                            {this.props.transactions.map((transaction) => {
+                                if (this.props.transaction.transType === "add") {
+                                    let worker = this.props.workers.find((obj) => { return transaction.typeId === obj.id })
+                                    return (
+                                        <tr>
+                                            <th scope="row">{transaction.transId}</th>
+                                            <td>{worker.type}</td>
+                                            <td>{transaction.transType}</td>
+                                            <td>{worker.name}</td>
+                                            <td>{transaction.eggCount}</td>
+                                            <td>{transaction.notes}</td>
+                                        </tr>
+                                    )
+                                }
+                            }
+                            )}
                         </tbody>
                     </table>
                 </div>
@@ -123,7 +147,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addEggs: eggs =>  dispatch(addEggs(eggs)),
+        postTransaction: eggs => dispatch(postTransaction(eggs)),
         fetchWorkers: () => dispatch(fetchWorkers()),
         fetchTransactions: () => dispatch(fetchTransactions())
     }

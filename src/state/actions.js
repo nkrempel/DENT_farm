@@ -7,10 +7,10 @@ import {
 } from './types';
 import axios from 'axios';
 
-export const addEggs = (payload) => {
+export const postTransaction = (transObj) => {
     console.log("made it to add Eggs ")
     return (dispatch, getState, url) => {
-        axios.post(`${url}transactions`, payload)
+        axios.post(`${url}transactions`, transObj)
     }
   }
   
