@@ -3,52 +3,58 @@ import {
   LOAD_ORDERS,
   GET_ORDERS,
   LOAD_WORKERS,
-  LOAD_TRANSACTIONS
+  LOAD_TRANSACTIONS,
+  POST_TRANSACTION,
+  PUT_ORDER
 } from './types';
 import axios from 'axios';
 
-export const postTransaction = (transObj) => {
-    console.log("made it to add Eggs ")
-    return (dispatch, getState, url) => {
-        axios.post(`${url}transactions`, transObj)
-    }
+export const postTransaction = (payload) => {
+  return (dispatch, getState, url) => {
+    axios.post(`${url}transactions`, payload)
+      .then(({data}) => {
+        dispatch(fetchTransactions());
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
-  
-  export const fetchTransactions = () => {
-  
-    return (dispatch, getState, url) => {
-      axios.get(`${url}transactions`)
-        .then(({ data }) => {
-          dispatch(loadTransactions(data));
-        })
-    }
+}
+
+export const fetchTransactions = () => {
+
+  return (dispatch, getState, url) => {
+    axios.get(`${url}transactions`)
+      .then(({ data }) => {
+        dispatch(loadTransactions(data));
+      })
   }
-  
-  export function loadTransactions(payload){
-     return {
-     type: 'LOAD_TRANSACTIONS',
-     payload
-     }
+}
+
+export function loadTransactions(payload) {
+  return {
+    type: LOAD_TRANSACTIONS,
+    payload
   }
+}
 export const fetchWorkers = () => {
 
-    return (dispatch, getState, url) => {
-        axios.get(`http://5a8b1a993d92490012370bca.mockapi.io/workers`)
+  return (dispatch, getState, url) => {
+    axios.get(`http://5a8b1a993d92490012370bca.mockapi.io/workers`)
 
-        .then(({data}) => {
-            console.log(data)
-            dispatch(loadWorkers(data))
-        })
-    }
+      .then(({ data }) => {
+        console.log(data)
+        dispatch(loadWorkers(data))
+      })
+  }
 }
 
 const loadWorkers = payload => {
-    return {
-        type: LOAD_WORKERS, payload
-    }
+  return {
+    type: LOAD_WORKERS, payload
+  }
 }
 export const postOrder = (orderObj) => {
-
   return (dispatch, getState, url) => {
     axios.post(`${url}orders`, orderObj)
       .then(({ data }) => {
@@ -70,5 +76,17 @@ const loadOrders = payload => {
   return {
     type: LOAD_ORDERS,
     payload
+  }
+}
+
+export const putOrder = (orderObj) => {
+  return (dispatch, getState, url) => {
+    axios.put(`${url}orders/${orderObj.id}`, orderObj)
+      .then(({ data }) => {
+        if(data.status === 'Completed') {
+          dispatch(addEggs({ transType: 'Order', typeId: data.id, eggCount: data.count, transactionNotes: `Order ${data.status}` }))
+        }  
+        dispatch(getOrders());
+      })
   }
 }
