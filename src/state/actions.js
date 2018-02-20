@@ -4,12 +4,13 @@ import {
   GET_ORDERS,
   LOAD_WORKERS,
   LOAD_TRANSACTIONS,
-  ADD_EGGS,
-  PUT_ORDER
+  POST_TRANSACTION,
+  PUT_ORDER,
+  GET_INVENTORY
 } from './types';
 import axios from 'axios';
 
-export const addEggs = (payload) => {
+export const postTransaction = (payload) => {
   return (dispatch, getState, url) => {
     axios.post(`${url}transactions`, payload)
       .then(({data}) => {
@@ -72,9 +73,24 @@ export const getOrders = () => {
       })
   }
 }
+export const getEggs = () => {
+
+  return (dispatch, getState, url) => {
+    axios.get(`${url}transactions`)
+      .then(({ data }) => {
+        dispatch(loadInventory(data));
+      })
+  }
+}
 const loadOrders = payload => {
   return {
     type: LOAD_ORDERS,
+    payload
+  }
+}
+const loadInventory = payload => {
+  return {
+    type: GET_INVENTORY,
     payload
   }
 }
@@ -84,7 +100,7 @@ export const putOrder = (orderObj) => {
     axios.put(`${url}orders/${orderObj.id}`, orderObj)
       .then(({ data }) => {
         if(data.status === 'Completed') {
-          dispatch(addEggs({ transType: 'Order', typeId: data.id, eggCount: data.count, transactionNotes: `Order ${data.status}` }))
+          dispatch(postTransaction({ transType: 'Order', typeId: data.id, eggCount: data.count, transactionNotes: `Order ${data.status}` }))
         }  
         dispatch(getOrders());
       })

@@ -46,6 +46,7 @@ class Orders extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <form onSubmit={this.onSubmit}>
         <div className="container">
@@ -125,7 +126,7 @@ class Orders extends Component {
                             <td>{order.type}</td>
                             <td>{order.count}</td>
                             {order.status === 'Open' ?
-                              < td > <button id={order.id} className="btn btn-primary" name="Completed" onClick={this.onAction} >Complete</button>
+                              <td> <button id={order.id} className="btn btn-primary" name="Completed" onClick={this.onAction} >Complete</button>
                                 <button id={order.id} className="btn btn-warning" name="Canceled" onClick={this.onAction} >Cancel</button>
                               </td> : <td>&nbsp;</td>
                             }
