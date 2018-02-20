@@ -10,7 +10,10 @@ import './App.css';
 class Inventory extends Component {
     render() {
         return (
+            <div className="card">
+
             <h1>This is the placeholder for the Inventory view</h1>
+            </div>
         )
     }
 }
