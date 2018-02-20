@@ -1,6 +1,7 @@
-import { LOAD_WORKERS } from "./types";
-
-
+import { 
+    LOAD_WORKERS,
+    LOAD_ORDERS
+ } from "./types";
 
 const initialState = {
     workers: [],
@@ -12,8 +13,10 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_WORKERS:
             return {...state, workers: action.payload}
-        default:
-            return state;
+      case LOAD_ORDERS: 
+        return {...state, orders: action.payload }
+      default:
+          return state;
     }
 }
 
