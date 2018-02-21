@@ -45,6 +45,9 @@
   width: 400px;
   height: 400px;
 }
+.ord-entry-ctn {
+  margin-top: 20px;
+}
 .orders-card-body {
   height: 400px;
   overflow: auto;
@@ -54,4 +57,7 @@
 }
 .radFilterBy {
   margin: 10px;
+}
+.complete-btn {
+  margin-right: 5px;
 }
