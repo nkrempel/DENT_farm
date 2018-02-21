@@ -12,8 +12,10 @@ import {
     fetchTransactions,
     addWorker
 } from './state/actions';
+import WorkerCard from './WorkerCard';
 import Worker from './Worker';
 import './App.css';
+import './Worker.css';
 
 const initialState = { 
         showDetailModal: false,
@@ -28,6 +30,17 @@ const initialState = {
         newWorkerImageURL: ''
     }
 
+    const customStyles = {
+        backgroudColor: 'antiquewhite',
+        content : {
+          top                   : '25%',
+          left                  : '25%',
+          right                 : 'auto',
+          bottom                : 'auto',
+          marginRight           : '-50%',
+          transform             : 'translate(-25%, -25%)' 
+        }
+      };
 
 class Workers extends Component {
     constructor(props) {
@@ -95,37 +108,73 @@ class Workers extends Component {
     render() {
         return (
             <div>
-                <h1>Meet the Workers!</h1>
+                <div className="titleCard text-xl-center rounded">
+                <div className="row">
+                    <div className="col-11">
+                    <h1>Meet the Workers!</h1> 
+                    </div>
+                    <div className="col-1 p-2">
+                <Link className="btn btn-primary" to="/workers/add">Add</Link></div> 
+                    </div>
+                    </div>
                 {this.props.isLoading ? (
                     <img style={{width: '300px', height: '150px'}}src={require('./images/egg_loader.gif')}/>
                 ) : (
-                <div>
-                <button onClick={this.handleShowAddWorker} className="btn btn-primary">Add Worker</button>
-                <div className="row">
-                    {this.props.workers.map((worker) => {
-                        let eggCount = 0;
-                        this.props.transactions.map((trans) => {
-                            if (trans.transType === 'Collect' && trans.typeId === worker.id) {
-                                eggCount += trans.eggCount
-                            }
-                        })
-                        return (
-                        <div key={worker.id} className="col-sm-4">
-                            <div className="card" style={{ width: '18rem' }}>
-                                <img className="card-img-top" style={{width: '300px', height: '250px'}} src={worker.imageURL} alt="Card image cap" />
-                                <div className="card-body">
-                                    <h1 className="card-title">{worker.name}</h1>
-                                    <p className="card-text"><strong>Total Eggs Produced: </strong> {eggCount} </p>
 
-                                    <button id={worker.id} onClick={this.handleShowDetails} className="btn btn-primary">Details</button>
-                                </div>
-
-
+                    <div className="workerContainer">
+                        <div className="row justify-content-center">
+                        <div className="col-6">
+                        {this.props.workers.map((worker) => {
+                            let eggCount = 0;
+                            this.props.transactions.map((trans) => {
+                                if (trans.transType === 'Collect' && trans.typeId === worker.id) {
+                                    eggCount += trans.eggCount
+                                }})
+                                return (
+                                    <WorkerCard 
+                                        key={worker.id}
+                                        id={worker.id}
+                                        image={worker.imageURL}
+                                        name={worker.name}
+                                        eggs={eggCount} />
+                                )
+                            })})
                             </div>
-                    </div>)})}
+                            </div>
+                            </div>
+
+
+                // <div>
+                // <button onClick={this.handleShowAddWorker} className="btn btn-primary">Add Worker</button>
+                // <div className="row">
+                //     {this.props.workers.map((worker) => {
+                //         let eggCount = 0;
+                //         this.props.transactions.map((trans) => {
+                //             if (trans.transType === 'Collect' && trans.typeId === worker.id) {
+                //                 eggCount += trans.eggCount
+                //             }
+                //         })
+                //         return (
+                //             <div key={worker.id} className="col-3">
+                //             <div className="card w-100" >
+                //                 <img className="card-img-top" src={worker.imageURL} alt="Card image cap" />
+                //                 <div className="card-body">
+                //                     <h1 className="card-title">{worker.name}</h1>
+                //                     <p className="card-text"><strong>Total Eggs Produced: </strong> {eggCount} </p>
+
+                //                     <button id={worker.id} onClick={this.handleShowDetails} className="btn btn-primary">Details</button>
+                //                 </div>
+
+                //                 </div>
+                //             </div>
                         
-                    </div>
-                </div>)}
+                //     )}
+                //     )}
+                        
+                //     </div>
+                // </div>
+            )
+            }
                 <ReactModal
                     isOpen={this.state.showDetailModal}
                     ariaHideApp={false}
@@ -133,7 +182,10 @@ class Workers extends Component {
                     shouldCloseOnEsc={true}
                     onRequestClose={() => { this.setState({ showDetailModal: false }) }}
                     contentLabel="Minimal Modal Example">
-                    <h1>Name: {this.state.selectedWorker.name}</h1>
+                    <div style={{backgroundColor: 'antiquewhite', margin: '0px'}}>
+                    <div className="row">
+                    <h1 className="text-center">Name: {this.state.selectedWorker.name}</h1>
+                    </div>
                     <h2>Type:</h2> <p>{this.state.selectedWorker.type}</p>
                     <h2>Breed:</h2> <p>{this.state.selectedWorker.breed}</p>
                     <h2>Egg Color:</h2> <p>{this.state.selectedWorker.eggColor}</p>
@@ -141,6 +193,7 @@ class Workers extends Component {
                     <h2>Primary Responsibility:</h2> <p>{this.state.selectedWorker.workerType}</p>
                     <img src={this.state.selectedWorker.imageURL} alt="Card image cap" />
                     <button className="btn btn-primary" onClick={() => { this.setState({ showDetailModal: false }) }}>Back to List</button>
+                    </div>
                 </ReactModal>
                 <ReactModal
                     isOpen={this.state.showAddWorkerModal}

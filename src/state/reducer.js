@@ -10,7 +10,7 @@ const initialState = {
     orders: [],
     trackerEntries: [],
     transactions: [],
-    isLoading: false
+    isLoading: true
 }
 
 const reducer = (state = initialState, action) => {
