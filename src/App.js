@@ -23,12 +23,12 @@ class App extends Component {
              
             </div>
             <div className="align-self-center" >
-              <h1 className="card text-xl-center rounded">The Farmer and Del's Egg Tracker</h1>
+              <h1 className="titleCard text-xl-center rounded">The Farmer and Del's Egg Tracker</h1>
               {/* <h1><span class="badge badge-secondary">The Farmer and Del's Egg Tracker</span></h1> */}
             </div>  
           </div>
           <div className="row">
-            <div className="rounded card-body col-3 " >
+            <div className="rounded card-body col-2 " >
             <ul className="list-group list-group-flush navMenu">
               <li className="list-group-item"><NavLink to="/">Home</NavLink></li>
               <li className="list-group-item"><NavLink to="/workers">Meet the Workers</NavLink></li>

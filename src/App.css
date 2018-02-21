@@ -4,7 +4,7 @@
   /* background-color: bisque; */
   
 
-  height: 100vh;
+  height: 125vh;
 }
 
 .navMenu li {
@@ -25,6 +25,25 @@
   display: flex;
   color: rgb(19, 19, 90);
   align-content: flex-start;
+}
+.titleCard, .homeCard, .list-group-item {
+  background-color: antiquewhite;
+  border-radius: 10px;
+  padding :5px;
+}
+.homeCard {
+  margin-top: 20px;
+}
+.list-group {
+  margin-left: 20px;
+}
+.figure-img {
+  margin-top: 10px;
+}
+
+.homeImg {
+  width: 400px;
+  height: 400px;
 }
 .orders-card-body {
   height: 400px;
