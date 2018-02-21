@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
 import {
-  BrowserRouter as Router,
-  Link,
-  Route,
-  NavLink
-} from 'react-router-dom';
-import {
   postTransaction,
   fetchWorkers,
   fetchTransactions
@@ -29,7 +23,7 @@ class Tracker extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeType = this.handleChangeType.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleWorkerSelect = this.handleWorkerSelect.bind(this);
+    //this.handleWorkerSelect = this.handleWorkerSelect.bind(this);
     this.handleSubmitNote = this.handleSubmitNote.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDateInput = this.handleDateInput.bind(this);
@@ -46,32 +40,39 @@ class Tracker extends Component {
   handleChangeType(e) {
     this.setState({ eggType: (e.target.value) })
   }
-  handleWorkerSelect(e) {
-    let workerSelect = this.props.workers.find((obj) => { return e.target.value === obj.id })
-    this.setState({ workerID: workerSelect.id })
-  }
+  // handleWorkerSelect(e) {
+  //   //console.log(`button clicked for ${e.target.value}`)
+  //   let workerSelect = this.props.workers.find((obj) => { return e.target.value === obj.id })
+  //   console.log("from handle worker select")
+  //   //console.log(workerSelect)
+  //   this.setState({ workerID: workerSelect.id })
+  // }
   handleSubmitNote(e) {
     this.setState({ notes: (e.target.value) })
   }
   handleSubmit(e) {
     e.preventDefault();
-    this.props.postTransaction({ transType: 'Collect', typeId: this.state.workerID, eggCount: this.state.eggs, transDate: this.state.date, transactionNotes: this.state.notes })
+    //console.log("from handle submit")
+    let tempId = document.getElementById("formControlSelect3").value
+    //console.log(tempId)
+    this.props.postTransaction({ transType: 'Collect', typeId: tempId, eggCount: this.state.eggs, transactionDate: this.state.date, transactionNotes: this.state.notes })
   }
   handleDateInput(e) {
     this.setState({ date: (e.target.value) })
   }
 
   render() {
+    let sortedList = this.props.transactions.sort((a, b) => { return (a.transId < b.transId) ? 1 : ((b.transId < a.transId) ? -1 : 0); });
     return (
       <div>
         {this.props.isLoading ?
           (
-            <img src={require('./images/egg_loader.gif')} />
+            <img alt="Loading..." src={require('./images/egg_loader.gif')} />
           ) :
           (
             <div>
-              <form className="form-body">
-                <div className="card">
+              <form className="form-body col-sm-11">
+                <div className="card trans-form-body border-primary">
                   <div className="form-row">
                     <div className="form-group col-md-6">
                       <label htmlFor="formControlSelect1">Type of Egg</label>
@@ -91,7 +92,7 @@ class Tracker extends Component {
                   <div className="form-row">
                     <div className="form-group col-md-6">
                       <label htmlFor="formControlSelect3">Worker</label>
-                      <select className="form-control" id="formControlSelect3" onSubmit={this.handleWorkerSelect}>
+                      <select className="form-control" id="formControlSelect3">
                         {this.props.workers.map((worker) => {
                           if (worker.workerType === "Layer") {
                             return (
@@ -124,7 +125,7 @@ class Tracker extends Component {
                   onClick={this.handleSubmit}
                 >Submit</button>
               </form>
-              <div className="display-table card">
+              <div className="display-table card col-sm-11 text-blue border-primary trans-card-body">
                 <table className="table table-striped">
                   <thead>
                     <tr>
@@ -133,14 +134,14 @@ class Tracker extends Component {
                       <th scope="col">Transaction Type</th>
                       <th scope="col">Worker</th>
                       <th scope="col">Number of Eggs</th>
-                      <th scope="col">Date Picked</th>
+                      <th scope="col">Date Collected</th>
                       <th scope="col">Notes</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    {this.props.transactions.map((transaction) => {
-                      if (transaction.transType === "Collect" && transaction.transId === "14") {
-                        let worker = this.props.workers.find(obj => (transaction.typeId === obj.id))
+                  <tbody>                                       
+                    {sortedList.map((transaction) => {
+                      if (transaction.transType === "Collect") {
+                        let worker = this.props.workers.find(obj => (transaction.typeId === obj.id))                                                
                         return (
                           <tr key={transaction.transId}>
                             <th scope="row">{transaction.transId}</th>
@@ -148,7 +149,7 @@ class Tracker extends Component {
                             <td>{transaction.transType}</td>
                             <td>{worker.name}</td>
                             <td>{transaction.eggCount}</td>
-                            <td>{transaction.transDate}</td>
+                            <td>{transaction.transactionDate}</td>
                             <td>{transaction.notes}</td>
                           </tr>
                         )
@@ -157,7 +158,6 @@ class Tracker extends Component {
                     )}
                   </tbody>
                 </table>
-
               </div>
             </div>)
         }
