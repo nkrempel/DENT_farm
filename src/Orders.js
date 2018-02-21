@@ -100,75 +100,79 @@ class Orders extends Component {
           </div>
         </div>
 
-        <div className="ordersCtn">
-          <div className="row">&nbsp;</div>
-          <div className="row">
-            <div className="col-sm-11">
-              <div className="card text-blue border-primary">
-                <div className="orders-card-body">
-                  <h5 className="card-title">Existing Order Details</h5>
-                  <div className="radFilterBy" id="radBox">Filter by:&nbsp;
-                    <input className="radFilterBy" type="radio" value="All" id="radAll"  onChange={this.onFilterChange} checked={this.state.filterStatus==='All'}/>
-                    <label for="radAll">All</label>
-                    <input className="radFilterBy" type="radio" value="Open" id="radOpen"  onChange={this.onFilterChange} checked={this.state.filterStatus === 'Open'}/>
-                    <label for="radOpen">Open</label>
-                    <input className="radFilterBy" type="radio" value="Completed" id="radCompleted"  onChange={this.onFilterChange} checked={this.state.filterStatus === 'Completed'}/>
-                    <label for="radCompleted">Completed</label>
-                    <input className="radFilterBy" type="radio" value="Canceled" id="radCanceled"  onChange={this.onFilterChange} checked={this.state.filterStatus === 'Canceled'}/>
-                    <label for="radCanceled">Canceled</label>
+        {this.props.isLoading ? (
+          <img style={{ width: '300px', height: '150px' }} src={require('./images/egg_loader.gif')} />
+        ) : (
+            <div className="ordersCtn">
+              <div className="row">&nbsp;</div>
+              <div className="row">
+                <div className="col-sm-11">
+                  <div className="card text-blue border-primary">
+                    <div className="orders-card-body">
+                      <h5 className="card-title">Existing Order Details</h5>
+                      <div className="radFilterBy" id="radBox">Filter by:&nbsp;
+                    <input className="radFilterBy" type="radio" value="All" id="radAll" onChange={this.onFilterChange} checked={this.state.filterStatus === 'All'} />
+                        <label for="radAll">All</label>
+                        <input className="radFilterBy" type="radio" value="Open" id="radOpen" onChange={this.onFilterChange} checked={this.state.filterStatus === 'Open'} />
+                        <label for="radOpen">Open</label>
+                        <input className="radFilterBy" type="radio" value="Completed" id="radCompleted" onChange={this.onFilterChange} checked={this.state.filterStatus === 'Completed'} />
+                        <label for="radCompleted">Completed</label>
+                        <input className="radFilterBy" type="radio" value="Canceled" id="radCanceled" onChange={this.onFilterChange} checked={this.state.filterStatus === 'Canceled'} />
+                        <label for="radCanceled">Canceled</label>
+                      </div>
+                      <table className="table table-striped table-bordered">
+                        <thead>
+                          <tr>
+                            <th scope="col">Order#</th>
+                            <th scope="col">Ordered</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Cust Ref</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Count</th>
+                            <th scope="col">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {this.props.orders.map((order, idx) => {
+                            if (order.status === this.state.filterStatus || this.state.filterStatus === 'All') {
+                              let extDate = new Date(order.createdAt * 1000)
+                              let dspMonth = extDate.toLocaleString("en", { month: "short" })
+                              let dspDay = extDate.getDate(), dspYear = extDate.getFullYear(), dspHour = extDate.getHours(), dspMins = extDate.getMinutes(), dspSecs = extDate.getSeconds(), dspAMPM = (dspHour >= 12) ? "PM" : "AM";
+                              return (
+                                <tr key={idx}>
+                                  <th scope="row">{order.id}</th>
+                                  <td>{dspMonth} {dspDay}, {dspYear}, {dspHour}:{dspMins}:{dspSecs} {dspAMPM}</td>
+                                  <td>{order.status}</td>
+                                  <td>{order.reference}</td>
+                                  <td>{order.type}</td>
+                                  <td>{order.count}</td>
+                                  {order.status === 'Open' ?
+                                    <td> <button id={order.id} className="btn btn-primary complete-btn" name="Completed" onClick={this.onAction} >Complete</button>
+                                      <button id={order.id} className="btn btn-warning" name="Canceled" onClick={this.onAction} >Cancel</button>
+                                    </td> : <td>&nbsp;</td>
+                                  }
+                                </tr>
+                              )
+                            }
+                          })
+                          }
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
-                  <table className="table table-striped table-bordered">
-                    <thead>
-                      <tr>
-                        <th scope="col">Order#</th>
-                        <th scope="col">Ordered</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Cust Ref</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Count</th>
-                        <th scope="col">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {this.props.orders.map((order, idx) => {
-                        if (order.status === this.state.filterStatus || this.state.filterStatus === 'All') {
-                          let extDate = new Date(order.createdAt * 1000)
-                          let dspMonth = extDate.toLocaleString("en", { month: "short" })
-                          let dspDay = extDate.getDate(), dspYear = extDate.getFullYear(), dspHour = extDate.getHours(), dspMins = extDate.getMinutes(), dspSecs = extDate.getSeconds(), dspAMPM = (dspHour >= 12) ? "PM" : "AM";
-                          return (
-                            <tr key={idx}>
-                              <th scope="row">{order.id}</th>
-                              <td>{dspMonth} {dspDay}, {dspYear}, {dspHour}:{dspMins}:{dspSecs} {dspAMPM}</td>
-                              <td>{order.status}</td>
-                              <td>{order.reference}</td>
-                              <td>{order.type}</td>
-                              <td>{order.count}</td>
-                              {order.status === 'Open' ?
-                                <td> <button id={order.id} className="btn btn-primary complete-btn" name="Completed" onClick={this.onAction} >Complete</button>
-                                  <button id={order.id} className="btn btn-warning" name="Canceled" onClick={this.onAction} >Cancel</button>
-                                </td> : <td>&nbsp;</td>
-                              }
-                            </tr>
-                          )
-                        }
-                      })
-                      }
-                    </tbody>
-                  </table>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
+            </div>)}
 
       </form>
     )
   }
 }
 
-const mapStateToProps = ({ orders }) => {
+const mapStateToProps = ( state ) => {
   return {
-    orders
+    orders: state.orders,
+    isLoading: state.isLoading
   }
 }
 
