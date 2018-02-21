@@ -71,9 +71,11 @@ export const postOrder = (orderObj) => {
 export const getOrders = () => {
 
   return (dispatch, getState, url) => {
+    dispatch(isLoading(true))
     axios.get(`${url}orders`)
       .then(({ data }) => {
-        dispatch(loadOrders(data));
+        dispatch(loadOrders(data))
+        dispatch(isLoading(false))
       })
   }
 }
