@@ -33,7 +33,7 @@ class Tracker extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentDidMount() {
+    componentWillMount() {
         //console.log(this.props)
         this.props.fetchWorkers()
         this.props.fetchTransactions()
@@ -59,6 +59,12 @@ class Tracker extends Component {
     render() {
         return (
             <div>
+                {this.props.isLoading ? 
+                (
+                    <img src={require('./images/egg_loader.gif')} />
+                ):
+                (
+                    <div>
                 <form className="form-body">
                     <div className="card">
                         <div className="form-row">
@@ -88,7 +94,7 @@ class Tracker extends Component {
                                             )
                                         }
                                     })
-                                    }
+                                }
                                 </select>
                             </div>
                             <div className="form-group col-md-6">
@@ -105,7 +111,7 @@ class Tracker extends Component {
                     </div>
                     <button type="button" className="btn btn-primary"
                         onClick={this.handleSubmit}
-                    >Submit</button>
+                        >Submit</button>
                 </form>
                 <div className="display-table card">
                     <table className="table table-striped table-bordered">
@@ -135,10 +141,13 @@ class Tracker extends Component {
                                     )
                                 }
                             }
-                            )}
+                        )}
                         </tbody>
                     </table>
-                </div>
+                        
+                    </div>
+                </div>)
+                }
             </div>
         )
     }
@@ -147,7 +156,8 @@ class Tracker extends Component {
 const mapStateToProps = state => {
     return {
         workers: state.workers,
-        transactions: state.transactions
+        transactions: state.transactions,
+        isLoading: state.isLoading
     }
 }
 
