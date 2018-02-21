@@ -47,7 +47,7 @@ export const fetchWorkers = () => {
     axios.get(`http://5a8b1a993d92490012370bca.mockapi.io/workers`)
 
       .then(({ data }) => {
-        console.log(data)
+        //console.log(data)
         dispatch(loadWorkers(data))
         dispatch(isLoading(false))
       })
