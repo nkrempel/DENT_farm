@@ -22,7 +22,7 @@ class Inventory extends Component {
     super(props);
     this.state = {
       startDate: '',
-      endDate: '',
+      endDate: new Date() ,
     }
   }
 
@@ -45,15 +45,17 @@ render() {
   return <div>
       <div className="card">
       <h1 className="card">Inventory</h1>
+     
+     
       <div className="center">
         <label id="startDate">Start Date</label>
         <input id='startDate' onChange={(e) => {this.setState({startDate: moment(e.target.value).format('D-MMM-YY')})}} type="date"/> 
         <label id="endDate">End Date</label>
-        <input id='endDate' onChange={(e) => {this.setState({endDate: moment(e.target.value).format('D-MMM-YY')})}} type="date"/> 
-        {/* <InfiniteCalendar width={600} height={200} selected={today} disabledDays={[0, 6]} minDate={lastWeek} /> */}
+        <input id='endDate' defaultValue="2018-02-21" onChange={(e) => {this.setState({endDate: moment(e.target.value).format('D-MMM-YY')})}} type="date"/> 
+       
       </div>
-        
-        <p>Last 7 days</p>
+  
+        <p>Eggs Per Day</p>
         <BarChart 
               axisLabels={{ x: 'My x Axis', y: 'My y Axis' }} 
               axes 
@@ -67,9 +69,7 @@ render() {
               xType={'time'} 
               xDomainRange={[this.state.startDate, this.state.endDate]} 
               data={chartData} />
-     
 
-  
       </div>
       
     </div>
