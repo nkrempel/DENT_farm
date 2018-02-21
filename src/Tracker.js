@@ -119,9 +119,10 @@ class Tracker extends Component {
                         </thead>
                         <tbody>
                             {this.props.transactions.map((transaction) => {
-                                if (transaction.transType === "Collect") {
-                                    {console.log(this.props.workers)}
-                                    let worker = this.props.workers.find((obj) => { return transaction.typeId === obj.id })
+                              console.log(this.props.transactions)
+                    if (transaction.transType === "Collect" && transaction.transId === "14") {
+                                    let worker = this.props.workers.find(obj => (transaction.typeId === obj.id))
+                                  console.log(transaction.transId,transaction.typeId, worker)
                                     return (
                                         <tr>
                                             <th scope="row">{transaction.transId}</th>

@@ -108,13 +108,13 @@ class Orders extends Component {
                 <div className="orders-card-body">
                   <h5 className="card-title">Existing Order Details</h5>
                   <div className="radFilterBy" id="radBox">Filter by:&nbsp;
-                    <input className="radFilterBy" type="radio" id="radAll" name="radOrdFilter" value="All" onChange={this.onFilterChange} />
+                    <input className="radFilterBy" type="radio" value="All" id="radAll"  onChange={this.onFilterChange} checked={this.state.filterStatus==='All'}/>
                     <label for="radAll">All</label>
-                    <input className="radFilterBy"  type="radio" id="radOpen" name="radOrdFilter" value="Open" onChange={this.onFilterChange} />
+                    <input className="radFilterBy" type="radio" value="Open" id="radOpen"  onChange={this.onFilterChange} checked={this.state.filterStatus === 'Open'}/>
                     <label for="radOpen">Open</label>
-                    <input className="radFilterBy"  type="radio" id="radCompleted" name="radOrdFilter" value="Completed" onChange={this.onFilterChange} />
+                    <input className="radFilterBy" type="radio" value="Completed" id="radCompleted"  onChange={this.onFilterChange} checked={this.state.filterStatus === 'Completed'}/>
                     <label for="radCompleted">Completed</label>
-                    <input className="radFilterBy"  type="radio" id="radCanceled" name="radOrdFilter" value="Canceled" onChange={this.onFilterChange} />
+                    <input className="radFilterBy" type="radio" value="Canceled" id="radCanceled"  onChange={this.onFilterChange} checked={this.state.filterStatus === 'Canceled'}/>
                     <label for="radCanceled">Canceled</label>
                   </div>
                   <table className="table table-striped">
