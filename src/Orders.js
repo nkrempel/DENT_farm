@@ -59,7 +59,7 @@ class Orders extends Component {
         <div className="container ord-entry-ctn">
           <div className="row">
             <div className="col-sm-8">
-              <div className="card text-white bg-primary">
+              <div className="card text-blue border-primary ord-entry-card">
                 <div className="card-body">
                   <h5 className="card-title">Enter order details:</h5>
                   <div className="col-sm-4"></div>
