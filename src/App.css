@@ -58,3 +58,14 @@
 .complete-btn {
   margin-right: 5px;
 }
+
+.trans-card-body {
+  height: 400px;
+  overflow: auto;
+  background-color: antiquewhite;
+  padding: 5px;
+}
+.trans-form-body {
+  background-color: antiquewhite;
+  padding: 5px;
+}
