@@ -56,9 +56,9 @@ class Orders extends Component {
     console.log(this.props)
     return (
       <form onSubmit={this.onSubmit}>
-        <div className="container">
+        <div className="container ord-entry-ctn">
           <div className="row">
-            <div className="col-sm-9">
+            <div className="col-sm-8">
               <div className="card text-white bg-primary">
                 <div className="card-body">
                   <h5 className="card-title">Enter order details:</h5>
@@ -103,7 +103,7 @@ class Orders extends Component {
         <div className="ordersCtn">
           <div className="row">&nbsp;</div>
           <div className="row">
-            <div className="col-sm-9">
+            <div className="col-sm-11">
               <div className="card text-blue border-primary">
                 <div className="orders-card-body">
                   <h5 className="card-title">Existing Order Details</h5>
@@ -117,7 +117,7 @@ class Orders extends Component {
                     <input className="radFilterBy" type="radio" value="Canceled" id="radCanceled"  onChange={this.onFilterChange} checked={this.state.filterStatus === 'Canceled'}/>
                     <label for="radCanceled">Canceled</label>
                   </div>
-                  <table className="table table-striped">
+                  <table className="table table-striped table-bordered">
                     <thead>
                       <tr>
                         <th scope="col">Order#</th>
@@ -144,7 +144,7 @@ class Orders extends Component {
                               <td>{order.type}</td>
                               <td>{order.count}</td>
                               {order.status === 'Open' ?
-                                <td> <button id={order.id} className="btn btn-primary" name="Completed" onClick={this.onAction} >Complete</button>
+                                <td> <button id={order.id} className="btn btn-primary complete-btn" name="Completed" onClick={this.onAction} >Complete</button>
                                   <button id={order.id} className="btn btn-warning" name="Canceled" onClick={this.onAction} >Cancel</button>
                                 </td> : <td>&nbsp;</td>
                               }
