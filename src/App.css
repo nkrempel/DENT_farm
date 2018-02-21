@@ -48,12 +48,14 @@
 .ord-entry-ctn {
   margin-top: 20px;
 }
+.ord-entry-card {
+  background-color: antiquewhite;
+}
+
 .orders-card-body {
   height: 400px;
   overflow: auto;
-}
-.form-body {
-  color: white;
+  background-color: antiquewhite;
 }
 .radFilterBy {
   margin: 10px;
