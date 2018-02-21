@@ -112,7 +112,7 @@ class Tracker extends Component {
                   <div className="form-row">
                     <div className="form-group col-md-6">
                       <label htmlFor="formDatePicker">Date</label>
-                      <input type="date" className="form-control" id="formDatePicker" onChange={this.handleDateInput} placeholder="Choose Date" />
+                      <input type="date" className="form-control" id="formDatePicker" onChange={this.handleDateInput} value="Choose Date" />
                     </div>
                     <div className="form-group col-md-6">
                       <label htmlFor="formTextArea1">Notes</label>
