@@ -8,3 +8,5 @@ export const GET_ORDERS = 'Gets orders from mock api';
 export const LOAD_TRANSACTIONS = 'Gets list of transactions'
 export const POST_TRANSACTION = 'Creates a new transaction';
 export const PUT_ORDER = 'Updates an order';
+export const GET_INVENTORY = 'Gets the inventory';
+export const IS_LOADING = "used to set the true/false flag when app is loading data"

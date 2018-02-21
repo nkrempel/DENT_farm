@@ -5,27 +5,31 @@ import {
   LOAD_WORKERS,
   LOAD_TRANSACTIONS,
   POST_TRANSACTION,
-  PUT_ORDER
+  PUT_ORDER,
+  GET_INVENTORY,
+  IS_LOADING
 } from './types';
 import axios from 'axios';
 
 export const postTransaction = (payload) => {
+    //console.log("made it to postTransaction");
   return (dispatch, getState, url) => {
     axios.post(`${url}transactions`, payload)
       .then(({data}) => {
         dispatch(fetchTransactions());
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
       })
   }
 }
 
 export const fetchTransactions = () => {
-
+    //console.log("made it to fetchTransactions")
   return (dispatch, getState, url) => {
     axios.get(`${url}transactions`)
       .then(({ data }) => {
+          //console.log(data)
         dispatch(loadTransactions(data));
       })
   }
@@ -38,13 +42,14 @@ export function loadTransactions(payload) {
   }
 }
 export const fetchWorkers = () => {
-
   return (dispatch, getState, url) => {
+    dispatch(isLoading(true))
     axios.get(`http://5a8b1a993d92490012370bca.mockapi.io/workers`)
 
       .then(({ data }) => {
-        console.log(data)
+        //console.log(data)
         dispatch(loadWorkers(data))
+        dispatch(isLoading(false))
       })
   }
 }
@@ -103,5 +108,23 @@ export const putOrder = (orderObj) => {
         }  
         dispatch(getOrders());
       })
+  }
+}
+
+export const addWorker = (workerObj) => {
+  return (dispatch, getState, url) => {
+    dispatch(isLoading(true))
+    axios.post(`http://5a8b1a993d92490012370bca.mockapi.io/workers`, workerObj)
+    .then(({data}) =>{
+      console.log(data)
+      dispatch(fetchWorkers)
+      dispatch(isLoading(false))
+    })
+  }
+}
+
+const isLoading = (payload) => {
+  return {
+    type: IS_LOADING, payload
   }
 }
