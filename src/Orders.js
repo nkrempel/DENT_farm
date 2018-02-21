@@ -6,7 +6,7 @@ import {
   NavLink
 } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postOrder, getOrders, putOrder} from './state/actions';
+import { postOrder, getOrders, putOrder } from './state/actions';
 import './App.css';
 
 class Orders extends Component {
@@ -17,12 +17,14 @@ class Orders extends Component {
       status: 'Open',
       reference: '',
       type: 'Chicken',
-      count: 6
+      count: 6,
+      filterStatus: 'Open'
     }
 
     this.onSubmit = this.onSubmit.bind(this)
     this.onInputChange = this.onInputChange.bind(this)
     this.onAction = this.onAction.bind(this)
+    this.onFilterChange = this.onFilterChange.bind(this)
   }
 
   componentDidMount() {
@@ -43,6 +45,11 @@ class Orders extends Component {
   onAction(e) {
     e.preventDefault()
     this.props.putOrder({ id: e.target.id, status: e.target.name })
+  }
+
+  onFilterChange(e) {
+    e.preventDefault()
+    this.setState({ filterStatus: e.target.value })
   }
 
   render() {
@@ -100,6 +107,16 @@ class Orders extends Component {
               <div className="card text-blue border-primary">
                 <div className="orders-card-body">
                   <h5 className="card-title">Existing Order Details</h5>
+                  <div className="radFilterBy" id="radBox">Filter by:&nbsp;
+                    <input className="radFilterBy" type="radio" id="radAll" name="radOrdFilter" value="All" onChange={this.onFilterChange} />
+                    <label for="radAll">All</label>
+                    <input className="radFilterBy"  type="radio" id="radOpen" name="radOrdFilter" value="Open" onChange={this.onFilterChange} />
+                    <label for="radOpen">Open</label>
+                    <input className="radFilterBy"  type="radio" id="radCompleted" name="radOrdFilter" value="Completed" onChange={this.onFilterChange} />
+                    <label for="radCompleted">Completed</label>
+                    <input className="radFilterBy"  type="radio" id="radCanceled" name="radOrdFilter" value="Canceled" onChange={this.onFilterChange} />
+                    <label for="radCanceled">Canceled</label>
+                  </div>
                   <table className="table table-striped">
                     <thead>
                       <tr>
@@ -114,24 +131,26 @@ class Orders extends Component {
                     </thead>
                     <tbody>
                       {this.props.orders.map((order, idx) => {
-                        let extDate = new Date(order.createdAt * 1000)
-                        let dspMonth = extDate.toLocaleString("en", { month: "short" })
-                        let dspDay = extDate.getDate(), dspYear = extDate.getFullYear(), dspHour = extDate.getHours(), dspMins = extDate.getMinutes(), dspSecs = extDate.getSeconds(), dspAMPM = (dspHour >= 12) ? "PM" : "AM";
-                        return (
-                          <tr key={idx}>
-                            <th scope="row">{order.id}</th>
-                            <td>{dspMonth} {dspDay}, {dspYear}, {dspHour}:{dspMins}:{dspSecs} {dspAMPM}</td>
-                            <td>{order.status}</td>
-                            <td>{order.reference}</td>
-                            <td>{order.type}</td>
-                            <td>{order.count}</td>
-                            {order.status === 'Open' ?
-                              <td> <button id={order.id} className="btn btn-primary" name="Completed" onClick={this.onAction} >Complete</button>
-                                <button id={order.id} className="btn btn-warning" name="Canceled" onClick={this.onAction} >Cancel</button>
-                              </td> : <td>&nbsp;</td>
-                            }
-                          </tr>
-                        )
+                        if (order.status === this.state.filterStatus || this.state.filterStatus === 'All') {
+                          let extDate = new Date(order.createdAt * 1000)
+                          let dspMonth = extDate.toLocaleString("en", { month: "short" })
+                          let dspDay = extDate.getDate(), dspYear = extDate.getFullYear(), dspHour = extDate.getHours(), dspMins = extDate.getMinutes(), dspSecs = extDate.getSeconds(), dspAMPM = (dspHour >= 12) ? "PM" : "AM";
+                          return (
+                            <tr key={idx}>
+                              <th scope="row">{order.id}</th>
+                              <td>{dspMonth} {dspDay}, {dspYear}, {dspHour}:{dspMins}:{dspSecs} {dspAMPM}</td>
+                              <td>{order.status}</td>
+                              <td>{order.reference}</td>
+                              <td>{order.type}</td>
+                              <td>{order.count}</td>
+                              {order.status === 'Open' ?
+                                <td> <button id={order.id} className="btn btn-primary" name="Completed" onClick={this.onAction} >Complete</button>
+                                  <button id={order.id} className="btn btn-warning" name="Canceled" onClick={this.onAction} >Cancel</button>
+                                </td> : <td>&nbsp;</td>
+                              }
+                            </tr>
+                          )
+                        }
                       })
                       }
                     </tbody>
