@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom';
 import {
     fetchWorkers,
+    fetchTransactions,
     addWorker
 } from './state/actions';
 import Worker from './Worker';
@@ -83,6 +84,7 @@ class Workers extends Component {
 
     componentDidMount() {
         this.props.fetchWorkerData()
+        this.props.fetchTransactionData()
     }
 
     componentDidUpdate() {
@@ -100,19 +102,27 @@ class Workers extends Component {
                 <div>
                 <button onClick={this.handleShowAddWorker} className="btn btn-primary">Add Worker</button>
                 <div className="row">
-                    {this.props.workers.map((worker) => (
+                    {this.props.workers.map((worker) => {
+                        let eggCount = 0;
+                        this.props.transactions.map((trans) => {
+                            if (trans.transType === 'Collect' && trans.typeId === worker.id) {
+                                eggCount += trans.eggCount
+                            }
+                        })
+                        return (
                         <div key={worker.id} className="col-sm-4">
                             <div className="card" style={{ width: '18rem' }}>
-                                <img className="card-img" style={{width: '300px', height: '250px'}} src={worker.imageURL} alt="Card image cap" />
-                                <div className="card-img-overlay">
-                                    <h1 className="card-body">{worker.name}</h1>
+                                <img className="card-img-top" style={{width: '300px', height: '250px'}} src={worker.imageURL} alt="Card image cap" />
+                                <div className="card-body">
+                                    <h1 className="card-title">{worker.name}</h1>
+                                    <p className="card-text"><strong>Total Eggs Produced: </strong> {eggCount} </p>
 
                                     <button id={worker.id} onClick={this.handleShowDetails} className="btn btn-primary">Details</button>
                                 </div>
 
 
                             </div>
-                        </div>))}
+                    </div>)})}
                         
                     </div>
                 </div>)}
@@ -196,6 +206,7 @@ class Workers extends Component {
 const mapStateToProps = state => {
     return {
         workers: state.workers,
+        transactions: state.transactions,
         isLoading: state.isLoading
     }
 }
@@ -203,6 +214,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchWorkerData: () => dispatch(fetchWorkers()),
+        fetchTransactionData: () => dispatch(fetchTransactions()),
         addWorker: (worker) => dispatch(addWorker(worker))
     }
 }
