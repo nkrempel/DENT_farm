@@ -65,7 +65,7 @@ class Orders extends Component {
             <h5 className="card-title mt-2">Enter Order Details:</h5>
             <div className="form-row ref-date">
               <div className="form-group col-sm-6 ref-date">
-                <label htmlFor="custRefId">Customer reference:</label>
+                <label htmlFor="custRefId">Customer Reference:</label>
                 <input className="form-control" type="text" name="reference" id="custRefId" value={this.state.reference} required onChange={this.onInputChange}></input>
               </div>
               <div className="form-group col-sm-4">
@@ -75,14 +75,14 @@ class Orders extends Component {
             </div>
             <div className="form-row egg-chars">
               <div className="form-group col-sm-2 egg-chars">
-                <label htmlFor="eggTypeId" >Egg type:</label>
+                <label htmlFor="eggTypeId" >Egg Type:</label>
                 <select className="form-control" name="type" id="eggTypeId" defaultValue="Chicken" onChange={this.onInputChange}>
                   <option value="Chicken" >Chicken</option>
                   <option value="Duck" >Duck</option>
                 </select>
               </div>
               <div className="form-group col-sm-2 egg-chars">
-                <label htmlFor="eggCountId">Egg count:</label>
+                <label htmlFor="eggCountId">Egg Count:</label>
                 <input className="form-control" type="number" min="6" placeholder="Multiples of 6" step="6" name="count" id="eggCountId" value={this.state.count} required onChange={this.onInputChange}></input>
               </div>
               <div className="form-row">&nbsp;
@@ -124,11 +124,11 @@ class Orders extends Component {
                             <thead className="thead-dark">
                               <tr>
                                 <th scope="col">Order#</th>
-                                <th scope="col">Ordered</th>
+                                <th scope="col">Order Date/Time</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Cust Ref</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Count</th>
+                                <th scope="col">Customer Reference</th>
+                                <th scope="col">Egg Type</th>
+                                <th scope="col">Egg Count</th>
                                 <th scope="col">Action</th>
                               </tr>
                             </thead>
