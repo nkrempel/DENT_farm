@@ -58,7 +58,8 @@ class Tracker extends Component {
     //console.log("from handle submit")
     let tempId = document.getElementById("formControlSelect3").value
     //console.log(tempId)
-    this.props.postTransaction({ transType: 'Collect', typeId: tempId, eggCount: this.state.eggs, transactionDate: this.state.date, transactionNotes: this.state.notes })
+    let transDate = moment(this.state.date).format('X')
+    this.props.postTransaction({ transType: 'Collect', typeId: tempId, eggCount: this.state.eggs, transactionDate: transDate, transactionNotes: this.state.notes })
   }
   handleDateInput(e) {
     this.setState({ date: (e.target.value) })
@@ -147,7 +148,8 @@ class Tracker extends Component {
                   <tbody>                                       
                     {sortedList.map((transaction) => {
                       if (transaction.transType === "Collect") {
-                        let worker = this.props.workers.find(obj => (transaction.typeId === obj.id))                                                
+                        let worker = this.props.workers.find(obj => (transaction.typeId === obj.id))
+                        let dspDate = moment(new Date(transaction.transactionDate * 1000)).format('MM/DD/YYYY')                                                
                         return (
                           <tr key={transaction.transId}>
                             <th scope="row">{transaction.transId}</th>
@@ -155,7 +157,7 @@ class Tracker extends Component {
                             <td>{transaction.transType}</td>
                             <td>{worker.name}</td>
                             <td>{transaction.eggCount}</td>
-                            <td>{transaction.transactionDate}</td>
+                            <td>{dspDate}</td>
                             <td>{transaction.transactionNotes}</td>
                           </tr>
                         )
