@@ -138,63 +138,14 @@ class Workers extends Component {
                                         name={worker.name}
                                         eggs={eggCount} />
                                 )
-                            })})
+                            })}
                             </div>
                             </div>
                             </div>
 
-
-                // <div>
-                // <button onClick={this.handleShowAddWorker} className="btn btn-primary">Add Worker</button>
-                // <div className="row">
-                //     {this.props.workers.map((worker) => {
-                //         let eggCount = 0;
-                //         this.props.transactions.map((trans) => {
-                //             if (trans.transType === 'Collect' && trans.typeId === worker.id) {
-                //                 eggCount += trans.eggCount
-                //             }
-                //         })
-                //         return (
-                //             <div key={worker.id} className="col-3">
-                //             <div className="card w-100" >
-                //                 <img className="card-img-top" src={worker.imageURL} alt="Card image cap" />
-                //                 <div className="card-body">
-                //                     <h1 className="card-title">{worker.name}</h1>
-                //                     <p className="card-text"><strong>Total Eggs Produced: </strong> {eggCount} </p>
-
-                //                     <button id={worker.id} onClick={this.handleShowDetails} className="btn btn-primary">Details</button>
-                //                 </div>
-
-                //                 </div>
-                //             </div>
-                        
-                //     )}
-                //     )}
-                        
-                //     </div>
-                // </div>
             )
             }
-                <ReactModal
-                    isOpen={this.state.showDetailModal}
-                    ariaHideApp={false}
-                    shouldCloseOnOverlayClick={true}
-                    shouldCloseOnEsc={true}
-                    onRequestClose={() => { this.setState({ showDetailModal: false }) }}
-                    contentLabel="Minimal Modal Example">
-                    <div style={{backgroundColor: 'antiquewhite', margin: '0px'}}>
-                    <div className="row">
-                    <h1 className="text-center">Name: {this.state.selectedWorker.name}</h1>
-                    </div>
-                    <h2>Type:</h2> <p>{this.state.selectedWorker.type}</p>
-                    <h2>Breed:</h2> <p>{this.state.selectedWorker.breed}</p>
-                    <h2>Egg Color:</h2> <p>{this.state.selectedWorker.eggColor}</p>
-                    <h2>Purchased Date:</h2> <p>{this.state.selectedWorker.purchaseDate}</p>
-                    <h2>Primary Responsibility:</h2> <p>{this.state.selectedWorker.workerType}</p>
-                    <img src={this.state.selectedWorker.imageURL} alt="Card image cap" />
-                    <button className="btn btn-primary" onClick={() => { this.setState({ showDetailModal: false }) }}>Back to List</button>
-                    </div>
-                </ReactModal>
+             
                 <ReactModal
                     isOpen={this.state.showAddWorkerModal}
                     ariaHideApp={false}
