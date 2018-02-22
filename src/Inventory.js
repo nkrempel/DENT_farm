@@ -197,7 +197,7 @@ class Inventory extends Component {
               <h4>{availableInventory}</h4>
             </div>
           </div>
-          <div className="center">
+          <div className="center mt-5">
             <DatePicker
               selected={this.state.startDate}
               selectsStart
