@@ -1,9 +1,8 @@
 .App {
   text-align: center;
   background-image: url('./images/rustic-barn-wood-wallpaper.jpg');
-  /* background-color: bisque; */
   background-repeat: repeat;
-  /* height: 125vh; */
+  min-height: 100vh;
 }
 
 .navMenu li {
@@ -45,17 +44,22 @@
   height: 400px;
 }
 .egg-chars, .ref-date {
-  /* margin-left: 20px;
-  align-items: center; */
   justify-content: center;
 }
+.ord-entry-card {
+  background-color: antiquewhite;
+  padding: 5px;
+}
+
 .orders-card-body {
   height: 400px;
   overflow: auto;
   background-color: antiquewhite;
 }
-.radFilterBy {
-  margin: 10px;
+  
+.ord-dsp-tbl {
+  table-layout: fixed;
+  word-wrap: break-word;
 }
 .complete-btn {
   margin-right: 5px;
@@ -70,4 +74,8 @@
 .trans-form-body {
   background-color: antiquewhite;
   padding: 5px;
+}
+.trans-outer-table {
+  table-layout: fixed;
+  word-wrap: break-word;
 }
