@@ -7,6 +7,7 @@ import {
 import './App.css';
 import { connect } from 'react-redux';
 import { transaction } from './Transaction';
+import moment from 'moment';
 
 
 class Tracker extends Component {
@@ -33,6 +34,8 @@ class Tracker extends Component {
     //console.log(this.props)
     this.props.fetchWorkers()
     this.props.fetchTransactions()
+    let rightNow = moment(Date.now()).format('YYYY-MM-DD')
+    this.setState({date:rightNow})
   }
   handleChange(e) {
     this.setState({ eggs: parseInt(e.target.value) })
@@ -75,22 +78,6 @@ class Tracker extends Component {
                 <div className="card trans-form-body border-primary">
                   <div className="form-row">
                     <div className="form-group col-md-6">
-                      <label htmlFor="formControlSelect1">Type of Egg</label>
-                      <select className="form-control" id="formControlSelect1" onChange={this.handleChangeType}>
-                        <option>Chicken</option>
-                        <option>Duck</option>
-                      </select>
-                    </div>
-                    <div className="form-group col-md-6">
-                      <label htmlFor="formControlSelect2">Transaction Type</label>
-                      <select className="form-control" id="formControlSelect2">
-                        <option>Add</option>
-                        {/* <option>Remove</option> */}
-                      </select>
-                    </div>
-                  </div>
-                  <div className="form-row">
-                    <div className="form-group col-md-6">
                       <label htmlFor="formControlSelect3">Worker</label>
                       <select className="form-control" id="formControlSelect3">
                         {this.props.workers.map((worker) => {
@@ -104,6 +91,23 @@ class Tracker extends Component {
                       </select>
                     </div>
                     <div className="form-group col-md-6">
+                      <label htmlFor="formControlSelect2">Transaction Type</label>
+                      <select className="form-control" id="formControlSelect2">
+                        <option>Add</option>
+                        {/* <option>Remove</option> */}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="form-row">
+                    <div className="form-group col-md-6">
+                      <label htmlFor="formControlSelect1">Type of Egg</label>
+                      {/* <label id="labelControl1">{this.props.workers.type}</label> */}
+                      <select className="form-control" id="formControlSelect1" onChange={this.handleChangeType}>
+                        <option>Chicken</option>
+                        <option>Duck</option>
+                      </select>
+                    </div>
+                    <div className="form-group col-md-6">
                       <label htmlFor="formControlSelect4">Transaction Amount</label>
                       <input type="number" className="form-control" id="formControlSelect4"
                         onChange={this.handleChange}>
@@ -113,11 +117,11 @@ class Tracker extends Component {
                   <div className="form-row">
                     <div className="form-group col-md-6">
                       <label htmlFor="formDatePicker">Date</label>
-                      <input type="date" className="form-control" id="formDatePicker" onChange={this.handleDateInput} placeholder="Choose Date" />
+                      <input type="date" className="form-control" id="formDatePicker" value={this.state.date} onChange={this.handleDateInput} placeholder="Choose Date" />
                     </div>
                     <div className="form-group col-md-6">
                       <label htmlFor="formTextArea1">Notes</label>
-                      <textarea className="form-control" id="formTextArea1" rows="2" onSubmit={this.handleSubmitNote}></textarea>
+                      <textarea className="form-control" id="formTextArea1" rows="2" onChange={this.handleSubmitNote}></textarea>
                     </div>
                   </div>
                 </div>
@@ -126,8 +130,8 @@ class Tracker extends Component {
                 >Submit</button>
               </form>
               <div className="display-table card col-sm-11 text-blue border-primary trans-card-body">
-                <table className="table table-striped">
-                  <thead>
+                <table className="table table-striped table-bordered">
+                  <thead className="thead-dark">
                     <tr>
                       <th scope="col">Transaction ID</th>
                       <th scope="col">Egg Type</th>
@@ -150,7 +154,7 @@ class Tracker extends Component {
                             <td>{worker.name}</td>
                             <td>{transaction.eggCount}</td>
                             <td>{transaction.transactionDate}</td>
-                            <td>{transaction.notes}</td>
+                            <td>{transaction.transactionNotes}</td>
                           </tr>
                         )
                       }
@@ -176,7 +180,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    postTransaction: eggs => dispatch(postTransaction(eggs)),
+    postTransaction: eggs => {console.log(eggs);dispatch(postTransaction(eggs))},
     fetchWorkers: () => dispatch(fetchWorkers()),
     fetchTransactions: () => dispatch(fetchTransactions())
   }
