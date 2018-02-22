@@ -1,15 +1,30 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import {
     connect
 } from 'react-redux'
 import {
     Link
 } from 'react-router-dom';
+import {BarChart} from 'react-easy-chart'
 import {
     fetchWorkers
 } from './state/actions'
 
 import './Worker.css';
+
+
+const getLastTwoWeeks = () => {
+    let retArr = [];
+    for (let i=14; i > 0; i--) {
+
+        let date = new Date()
+        date.setDate(date.getDate() - i)
+        //console.log(date)
+        retArr.push(moment(date).format('MMM D'))
+    }
+    return retArr
+}
 
 class WorkerDetail extends Component {
     constructor(props) {
@@ -27,10 +42,41 @@ class WorkerDetail extends Component {
     }
 
     render() {
-        console.log(this.props.match.params.id)
+        //console.log(this.props.match.params.id)
         let worker = {}
         worker = this.props.workers.find((obj) => {return obj.id === this.props.match.params.id})
-        console.log(worker)
+        //console.log(worker)
+        let totalEggCount = 0;
+        this.props.transactions.map((trans) => {
+            if (trans.transType === 'Collect' && trans.typeId === worker.id) {
+                totalEggCount += trans.eggCount
+            }})
+        let lastTwoWeeks = [];
+        lastTwoWeeks = getLastTwoWeeks();
+        console.log(lastTwoWeeks);
+        let chartData = []
+        let workerTransForDate = this.props.transactions.filter((transaction) => {
+            return (transaction.transType === 'Collect' 
+                    && transaction.typeId === worker.id)
+        })
+        console.log(workerTransForDate)
+        lastTwoWeeks.map((date) => {
+            console.log("Inside Date map")
+           
+            // if (workerTransForDate) {
+            //     let count = 0;
+            //     workerTransForDate.map((trn) => {
+            //         console.log("Inside map")
+            //         count += trn.eggCount
+            //         })
+            //     chartData.push({x: moment(date).format('MMM D'), y:count})
+            // } else {
+            //     chartData.push({x: moment(date).format('MMM D'), y:0})
+            // }
+        })
+        //console.log("logging ChartData")
+        console.log(chartData)
+
         return (
             <div>
             {this.props.isLoading ? (
@@ -99,9 +145,50 @@ class WorkerDetail extends Component {
                         <p>{worker.purchaseDate}</p>
                     </div>
                 </div>
+                <hr />
+                <div className="row">
+                    <div className="col-12 text-left">
+                        <h2>Production data for {worker.name}</h2>
+                    </div>
+                </div>
+                <div className="row">
+                <div className="col-3 text-right">
+                        <h5>Lifetime Egg Production:</h5>
+                    </div>
+                    <div className="col-9 text-left">
+                        <p>{totalEggCount}</p>
+                    </div>
+                </div>
+                <div className="row justify-content-md-center">
+                <h3>Egg Production for last 14 days</h3>
+                <div className="col-12">
+                <BarChart
+                    axisLabels={{ x: 'Date', y: 'Count' }} 
+                    axes
+                    height={300}
+                    width={750}
+                    barWidth={15}
+                    xType={'text'}
+                    data={[
+                    {x: '1-Jan-15', y: 20},
+                    {x: '2-Jan-15', y: 30},
+                    {x: '3-Jan-15', y: 40},
+                    {x: '4-Jan-15', y: 20},
+                    {x: '5-Jan-15', y: 40},
+                    {x: '6-Jan-15', y: 25},
+                    {x: '7-Jan-15', y: 5},
+                    {x: '8-Jan-15', y: 15},
+                    {x: '9-Jan-15', y: 25},
+                    {x: '10-Jan-15', y: 35},
+                    {x: '11-Jan-15', y: 25},
+                    {x: '12-Jan-15', y: 15},
+                    {x: '13-Jan-15', y: 5},
+                    {x: '14-Jan-15', y: 15}
+                    ]}
+                />
                 
-
-
+                </div>
+                </div>
                 
                 </div>
                 </div>
