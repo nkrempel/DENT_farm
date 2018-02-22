@@ -106,7 +106,7 @@ class Orders extends Component {
                 <div className="ordersCtn">
                   <div className="row">&nbsp;</div>
                   <div className="row">
-                    <div className="col-sm-14">
+                    <div className="col-sm-11">
                       <div className="card border-primary">
                         <div className="orders-card-body">
                           <h5 className="card-title mt-2">Existing Order Details</h5>

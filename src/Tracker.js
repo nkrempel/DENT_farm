@@ -125,12 +125,14 @@ class Tracker extends Component {
                     </div>
                   </div>
                 </div>
+                <div className="row">&nbsp;</div>
                 <button type="button" className="btn btn-primary"
                   onClick={this.handleSubmit}
                 >Submit</button>
+                <div className="row">&nbsp;</div>
               </form>
               <div className="display-table card col-sm-11 text-blue border-primary trans-card-body">
-                <table className="table table-striped table-bordered">
+                <table className="table table-striped table-bordered trans-outer-table">
                   <thead className="thead-dark">
                     <tr>
                       <th scope="col">Transaction ID</th>
