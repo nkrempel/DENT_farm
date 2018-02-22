@@ -9,17 +9,19 @@ import { connect } from 'react-redux';
 import { transaction } from './Transaction';
 import moment from 'moment';
 
+const initialState = {
+  eggs: undefined,
+  eggType: '',
+  workerID: '',
+  date: '',
+  notes: ''
+}
+
 
 class Tracker extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      eggs: 0,
-      eggType: '',
-      workerID: '',
-      date: '',
-      notes: ''
-    }
+    this.state = initialState
 
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeType = this.handleChangeType.bind(this);
@@ -41,7 +43,7 @@ class Tracker extends Component {
     this.setState({ eggs: parseInt(e.target.value) })
   }
   handleChangeType(e) {
-    this.setState({ eggType: (e.target.value) })
+    this.setState(initialState)
   }
   // handleWorkerSelect(e) {
   //   //console.log(`button clicked for ${e.target.value}`)
@@ -60,13 +62,14 @@ class Tracker extends Component {
     //console.log(tempId)
     let transDate = moment(this.state.date).format('X')
     this.props.postTransaction({ transType: 'Collect', typeId: tempId, eggCount: this.state.eggs, transactionDate: transDate, transactionNotes: this.state.notes })
+    this.setState({ eggs: '', notes: ''})
   }
   handleDateInput(e) {
     this.setState({ date: (e.target.value) })
   }
 
   render() {
-    let sortedList = this.props.transactions.sort((a, b) => { return (a.transId < b.transId) ? 1 : ((b.transId < a.transId) ? -1 : 0); });
+    let sortedList = this.props.transactions.sort((a, b) => { return (parseInt(a.transId) < parseInt(b.transId) ? 1 : (parseInt(b.transId) < parseInt(a.transId)) ? -1 : 0); });
     return (
       <div>
         {this.props.isLoading ?
@@ -110,7 +113,7 @@ class Tracker extends Component {
                     </div>
                     <div className="form-group col-md-6">
                       <label htmlFor="formControlSelect4">Transaction Amount</label>
-                      <input type="number" className="form-control" id="formControlSelect4"
+                      <input type="number" value={this.state.eggs} className="form-control" id="formControlSelect4"
                         onChange={this.handleChange}>
                       </input>
                     </div>
@@ -122,7 +125,7 @@ class Tracker extends Component {
                     </div>
                     <div className="form-group col-md-6">
                       <label htmlFor="formTextArea1">Notes</label>
-                      <textarea className="form-control" id="formTextArea1" rows="2" onChange={this.handleSubmitNote}></textarea>
+                      <textarea className="form-control" id="formTextArea1" rows="2" value={this.state.notes} onChange={this.handleSubmitNote}></textarea>
                     </div>
                   </div>
                 </div>
