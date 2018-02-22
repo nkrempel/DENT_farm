@@ -61,18 +61,17 @@ class WorkerDetail extends Component {
         })
         console.log(workerTransForDate)
         lastTwoWeeks.map((date) => {
-            console.log("Inside Date map")
-           
-            // if (workerTransForDate) {
-            //     let count = 0;
-            //     workerTransForDate.map((trn) => {
-            //         console.log("Inside map")
-            //         count += trn.eggCount
-            //         })
-            //     chartData.push({x: moment(date).format('MMM D'), y:count})
-            // } else {
-            //     chartData.push({x: moment(date).format('MMM D'), y:0})
-            // }
+            let count = 0;
+            console.log(`Inside Date map for ${date}`)
+            workerTransForDate.map((transaction) => {
+                    let formattedDate = moment.unix(transaction.transactionDate).format('MMM D')
+                    console.log(formattedDate)
+                    if (date === formattedDate) {
+                        count += transaction.eggCount;
+                    }
+                })
+            chartData.push({x: date, y:count})   
+
         })
         //console.log("logging ChartData")
         console.log(chartData)
@@ -167,24 +166,10 @@ class WorkerDetail extends Component {
                     axes
                     height={300}
                     width={750}
-                    barWidth={15}
+                    yTickNumber={5}
+                    barWidth={5}
                     xType={'text'}
-                    data={[
-                    {x: '1-Jan-15', y: 20},
-                    {x: '2-Jan-15', y: 30},
-                    {x: '3-Jan-15', y: 40},
-                    {x: '4-Jan-15', y: 20},
-                    {x: '5-Jan-15', y: 40},
-                    {x: '6-Jan-15', y: 25},
-                    {x: '7-Jan-15', y: 5},
-                    {x: '8-Jan-15', y: 15},
-                    {x: '9-Jan-15', y: 25},
-                    {x: '10-Jan-15', y: 35},
-                    {x: '11-Jan-15', y: 25},
-                    {x: '12-Jan-15', y: 15},
-                    {x: '13-Jan-15', y: 5},
-                    {x: '14-Jan-15', y: 15}
-                    ]}
+                    data={chartData}
                 />
                 
                 </div>
