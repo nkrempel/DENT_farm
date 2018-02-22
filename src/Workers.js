@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import ReactModal from 'react-modal';
+import ReactModal from 'react-modal';
 import {
     BrowserRouter as Router,
     Link,
@@ -146,62 +146,7 @@ class Workers extends Component {
             )
             }
              
-                <ReactModal
-                    isOpen={this.state.showAddWorkerModal}
-                    ariaHideApp={false}
-                    shouldCloseOnOverlayClick={true}
-                    shouldCloseOnEsc={true}
-                    onRequestClose={() => { this.setState({ showAddWorkerModal: false }) }}
-                    contentLabel="Minimal Modal Example">
-                    <form>
-                        <div className="form-group">
-                            <label htmlFor="newWorkerName">Name:</label>
-                            <input type="email" className="form-control" id="newWorkerName" value={this.state.newWorkerName} onChange={this.handleInputChange} placeholder="Enter name" />
-                            {/* <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> */}
-                        </div>
-                        <div className="form-check form-check-inline">
-                            <input className="form-check-input" type="radio" name="WorkerType" id="newWorkerType" value="Chicken" onChange={this.handleInputChange} checked={this.state.newWorkerType === 'Chicken'? true: false}/>
-                                <label className="form-check-label" htmlFor="WorkerType">
-                                    Chicken
-                                </label>
-                        </div>
-                            <div className="form-check form-check-inline">
-                                <input className="form-check-input" type="radio" name="WorkerType" id="newWorkerType" value="Duck" onChange={this.handleInputChange} checked={this.state.newWorkerType === 'Duck'? true: false}/>
-                                    <label className="form-check-label" htmlFor="WorkerType">
-                                        Duck
-                                </label>
-                        </div>
-                                <div className="form-group">
-                                    <label htmlFor="newWorkerBreed">Breed:</label>
-                                    <input type="text" className="form-control" id="newWorkerBreed" value={this.state.newWorkerBreed} onChange={this.handleInputChange} placeholder="Enter name" />
-                                    
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="newWorkerEggColor">Egg Color:</label>
-                                    <input type="text" className="form-control" id="newWorkerEggColor" value={this.state.newWorkerEggColor} onChange={this.handleInputChange}  placeholder="Enter egg Color" />
-                                    
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="newWorkerPurchaseDate">Purchase Date:</label>
-                                    <input type="date" className="form-control" id="newWorkerPurchaseDate" onChange={this.handleInputChange} placeholder="Enter name" />
-                                    
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="newWorkerPrimaryResponsibility">Primary Responsibility:</label>
-                                    <input type="text" className="form-control" id="newWorkerPrimaryResponsibility" value={this.state.newWorkerPrimaryResponsibility} onChange={this.handleInputChange} placeholder="Enter name" />
-                                    
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="exampleInputEmail1">Image URL:</label>
-                                    <input type="text" className="form-control" id="newWorkerImageURL" value={this.state.newWorkerImageURL} onChange={this.handleInputChange} placeholder="Enter name" />
-                                    
-                                </div>
-                                <button className="btn btn-primary" onClick={this.handleAddWorker}>Add</button>&nbsp;
-                            <button className="btn btn-primary" onClick={this.handleCancelAdd}>Cancel</button>
 
-                    </form>
-                            
-                </ReactModal>
             </div>
                     )
     }
