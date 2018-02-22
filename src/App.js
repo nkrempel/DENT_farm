@@ -37,7 +37,7 @@ class App extends Component {
               <li className="list-group-item"><NavLink to="/workers">Meet the Workers</NavLink></li>
               <li className="list-group-item"><NavLink to="/tracker">Daily Tracker</NavLink></li>
               <li className="list-group-item"><NavLink to="/inventory">Current Inventory</NavLink></li>
-              <li className="list-group-item"><NavLink to="/orders">Orders</NavLink></li>
+              <li className="list-group-item"><NavLink to="/orders">Customer Orders</NavLink></li>
               
             </ul>
             </div>
