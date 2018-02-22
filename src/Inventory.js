@@ -12,30 +12,40 @@ import 'react-datepicker/dist/react-datepicker.css'
 const mockAPI = 'http://5a8b1a993d92490012370bca.mockapi.io/'
 
 class Inventory extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       startDate: '',
       endDate: '',
-      chartData: []
+      chartData: [],
+      showToolTip: false,
+      top: ``,
+      left: ``,
+      y: '',
+      x: ''
+
       // eggTypeSource: '',
     }
     this.handleChangeStart = this.handleChangeStart.bind(this)
     this.handleChangeEnd = this.handleChangeEnd.bind(this)
+    this.mouseOverHandler = this.mouseOverHandler.bind(this)
+    this.mouseMoveHandler = this.mouseMoveHandler.bind(this)
+    this.mouseOutHandler = this.mouseOutHandler.bind(this)
+
     // this.handleOptionChange = this.handleOptionChange.bind(this)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.fetchTransactions()
   }
 
-  handleChangeStart (date) {
+  handleChangeStart(date) {
     // this.setState({startDate: moment(date).format('MM-DD-YYYY')
     this.setState({
       startDate: moment(date)
     })
   }
-  handleChangeEnd (date) {
+  handleChangeEnd(date) {
     // this.setState({endDate: moment(date).format('D-MMM-YY')
     this.setState({
       endDate: date
@@ -53,7 +63,28 @@ class Inventory extends Component {
   //   }
   //   }
 
-  render () {
+  mouseOverHandler(d, e) {
+    this.setState({
+      showToolTip: true,
+      top: `${e.screenY - 10}px`,
+      left: `${e.screenX + 10}px`,
+      y: d.y,
+      x: d.x
+    });
+  }
+
+  mouseMoveHandler(e) {
+    if (this.state.showToolTip) {
+      this.setState({ top: `${e.y - 10}px`, left: `${e.x + 10}px` });
+    }
+  }
+
+  mouseOutHandler() {
+    this.setState({ showToolTip: false });
+  }
+
+
+  render() {
     let chartData = []
     let sortData = this.props.transactions.slice()
     sortData.sort(function (a, b) {
@@ -62,7 +93,6 @@ class Inventory extends Component {
     let currentDate = 0
     let firstPass = true
     let dateEggCount = 0
-    console.log(sortData)
     let sortDataLength = sortData.length
 
     sortData.map((item, idx) => {
@@ -71,12 +101,10 @@ class Inventory extends Component {
           currentDate = moment.unix(item.transactionDate).format('D-MMM-YY')
           firstPass = false
           dateEggCount = dateEggCount + item.eggCount
-          console.log('first pass current count ' + dateEggCount)
         } else if (
           currentDate === moment.unix(item.transactionDate).format('D-MMM-YY')
         ) {
           dateEggCount = dateEggCount + item.eggCount
-          console.log('current count ' + dateEggCount)
           if ((idx = sortDataLength - 1)) {
             chartData.push({
               x: currentDate,
@@ -84,7 +112,6 @@ class Inventory extends Component {
             })
           }
         } else {
-          console.log('this was pushed ' + currentDate + ': ' + dateEggCount)
           chartData.push({
             x: currentDate,
             y: dateEggCount
@@ -92,11 +119,9 @@ class Inventory extends Component {
           dateEggCount = item.eggCount
           currentDate = moment.unix(item.transactionDate).format('D-MMM-YY')
         }
-        console.log(chartData)
       }
     })
 
-    // console.log(this.state)
     console.log(this.props.transactionDate)
     return (
       <div>
@@ -131,9 +156,14 @@ class Inventory extends Component {
           </div>
 
           <p>Eggs Per Day</p>
+          {this.state.showToolTip ? 
+            <p>{this.state.y} eggs were collected on {this.state.x}.</p> :
+            <p>&nbsp;</p>
+          }
           <BarChart
-            axisLabels={{ x: 'My x Axis', y: 'My y Axis' }}
+            axisLabels={{ x: 'Day', y: 'Count' }}
             axes
+            grid
             colorBars
             height={250}
             width={650}
@@ -147,6 +177,10 @@ class Inventory extends Component {
               moment(this.state.endDate).format('D-MMM-YY')
             ]}
             data={chartData}
+            mouseOverHandler={this.mouseOverHandler}
+            mouseOutHandler={this.mouseOutHandler}
+            mouseMoveHandler={this.mouseMoveHandler}
+            yDomainRange={[0, 40]}
           />
 
         </div>
