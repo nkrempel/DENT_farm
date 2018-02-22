@@ -76,3 +76,7 @@
   background-color: antiquewhite;
   padding: 5px;
 }
+.trans-outer-table {
+  table-layout: fixed;
+  word-wrap: break-word;
+}
