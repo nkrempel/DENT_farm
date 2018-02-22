@@ -62,10 +62,10 @@ class Orders extends Component {
       <div>
         <form className="form-body col-sm-11" onSubmit={this.onSubmit}>
           <div className="card border-primary ord-entry-card">
-            <h5 className="card-title mt-2">Enter order details:</h5>
+            <h5 className="card-title mt-2">Enter Order Details:</h5>
             <div className="form-row ref-date">
               <div className="form-group col-sm-6 ref-date">
-                <label htmlFor="custRefId">Customer reference:</label>
+                <label htmlFor="custRefId">Customer Reference:</label>
                 <input className="form-control" type="text" name="reference" id="custRefId" value={this.state.reference} required onChange={this.onInputChange}></input>
               </div>
               <div className="form-group col-sm-4">
@@ -75,14 +75,14 @@ class Orders extends Component {
             </div>
             <div className="form-row egg-chars">
               <div className="form-group col-sm-2 egg-chars">
-                <label htmlFor="eggTypeId" >Egg type:</label>
+                <label htmlFor="eggTypeId" >Egg Type:</label>
                 <select className="form-control" name="type" id="eggTypeId" defaultValue="Chicken" onChange={this.onInputChange}>
                   <option value="Chicken" >Chicken</option>
                   <option value="Duck" >Duck</option>
                 </select>
               </div>
               <div className="form-group col-sm-2 egg-chars">
-                <label htmlFor="eggCountId">Egg count:</label>
+                <label htmlFor="eggCountId">Egg Count:</label>
                 <input className="form-control" type="number" min="6" placeholder="Multiples of 6" step="6" name="count" id="eggCountId" value={this.state.count} required onChange={this.onInputChange}></input>
               </div>
               <div className="form-row">&nbsp;
@@ -111,24 +111,24 @@ class Orders extends Component {
                         <div className="orders-card-body">
                           <h5 className="card-title mt-2">Existing Order Details</h5>
                           <div className="radFilterBy" id="radBox">Filter by:&nbsp;
-                            <input className="radFilterBy" type="radio" value="All" name="radFilter" id="radAll" onChange={this.onFilterChange} checked={this.state.filterStatus === 'All'} />
-                            <label htmlFor="radAll">All</label>
-                            <input className="radFilterBy" type="radio" value="Open" name="radFilter" id="radOpen" onChange={this.onFilterChange} checked={this.state.filterStatus === 'Open'} />
-                            <label htmlFor="radOpen">Open</label>
-                            <input className="radFilterBy" type="radio" value="Completed" name="radFilter" id="radCompleted" onChange={this.onFilterChange} checked={this.state.filterStatus === 'Completed'} />
-                            <label htmlFor="radCompleted">Completed</label>
-                            <input className="radFilterBy" type="radio" value="Canceled" name="radFilter" id="radCanceled" onChange={this.onFilterChange} checked={this.state.filterStatus === 'Canceled'} />
-                            <label htmlFor="radCanceled">Canceled</label>
+                            <input className="radFilterBy ml-2" type="radio" value="All" name="radFilter" id="radAll" onChange={this.onFilterChange} checked={this.state.filterStatus === 'All'} />
+                            <label className="radFilterBy ml-1" htmlFor="radAll">All</label>
+                            <input className="radFilterBy ml-2" type="radio" value="Open" name="radFilter" id="radOpen" onChange={this.onFilterChange} checked={this.state.filterStatus === 'Open'} />
+                            <label className="radFilterBy ml-1" htmlFor="radOpen">Open</label>
+                            <input className="radFilterBy ml-2" type="radio" value="Completed" name="radFilter" id="radCompleted" onChange={this.onFilterChange} checked={this.state.filterStatus === 'Completed'} />
+                            <label className="radFilterBy ml-1" htmlFor="radCompleted">Completed</label>
+                            <input className="radFilterBy ml-2" type="radio" value="Canceled" name="radFilter" id="radCanceled" onChange={this.onFilterChange} checked={this.state.filterStatus === 'Canceled'} />
+                            <label className="radFilterBy ml-1" htmlFor="radCanceled">Canceled</label>
                           </div>
-                          <table className="table table-striped table-bordered">
+                          <table className="table table-striped table-bordered ord-dsp-tbl">
                             <thead className="thead-dark">
                               <tr>
                                 <th scope="col">Order#</th>
-                                <th scope="col">Ordered</th>
+                                <th scope="col">Order Date/Time</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Cust Ref</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Count</th>
+                                <th scope="col">Customer Reference</th>
+                                <th scope="col">Egg Type</th>
+                                <th scope="col">Egg Count</th>
                                 <th scope="col">Action</th>
                               </tr>
                             </thead>
@@ -136,18 +136,14 @@ class Orders extends Component {
                               {this.props.orders.map((order, idx) => {
                                 if (order.status === this.state.filterStatus || this.state.filterStatus === 'All') {
                                   let dspDate = moment(new Date(order.orderDate * 1000)).format('MM/DD/YYYY hh:mm A')
-                              // let extDate = new Date(order.orderDate * 1000)
-                                  // let dspMonth = extDate.toLocaleString("en", { month: "short" })
-                                  // let dspDay = extDate.getDate(), dspYear = extDate.getFullYear(), dspHour = extDate.getHours(), dspMins = extDate.getMinutes(), dspSecs = extDate.getSeconds(), dspAMPM = (dspHour >= 12) ? "PM" : "AM";
                                   return (
                                     <tr key={idx}>
-                                      <td class="px-0">{order.id}</td>
-                                      {/* <td>{dspMonth} {dspDay}, {dspYear}, {dspHour}:{dspMins}:{dspSecs} {dspAMPM}</td> */}
-                                      <td class="px-1">{dspDate}</td>
-                                      <td class="px-0">{order.status}</td>
-                                      <td class="px-1">{order.reference}</td>
-                                      <td class="px-1">{order.type}</td>
-                                      <td class="px-0">{order.count}</td>
+                                      <td>{order.id}</td>
+                                      <td>{dspDate}</td>
+                                      <td>{order.status}</td>
+                                      <td>{order.reference}</td>
+                                      <td>{order.type}</td>
+                                      <td>{order.count}</td>
                                       {order.status === 'Open' ?
                                         <td> <button id={order.id} className="btn btn-primary complete-btn" name="Completed" onClick={this.onAction} >Complete</button>
                                           <button id={order.id} className="btn btn-warning" name="Canceled" onClick={this.onAction} >Cancel</button>
