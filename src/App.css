@@ -2,9 +2,8 @@
   text-align: center;
   background-image: url('./images/rustic-barn-wood-wallpaper.jpg');
   /* background-color: bisque; */
-  
-
-  height: 125vh;
+  background-repeat: repeat;
+  /* height: 125vh; */
 }
 
 .navMenu li {
@@ -45,13 +44,11 @@
   width: 400px;
   height: 400px;
 }
-.ord-entry-ctn {
-  margin-top: 20px;
+.egg-chars, .ref-date {
+  /* margin-left: 20px;
+  align-items: center; */
+  justify-content: center;
 }
-.ord-entry-card {
-  background-color: antiquewhite;
-}
-
 .orders-card-body {
   height: 400px;
   overflow: auto;

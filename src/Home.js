@@ -14,15 +14,16 @@ class Home extends Component {
         <h1>In the beginning</h1>
         <p className="text-left">
           Farmer and the Del started as a small hobby and has slowly grown over
-          the years. It started with a small garden in the back yard, then got a
-          little bigger, then a little bigger. I grew up in southern California
+          the years. It started with a small garden in the back yard, then it got a
+          little bigger, then a little bigger. </p>
+          <p className="text-left">
+          I grew up in southern California
           far away from any real food production. Where my food came from or
           what happens to it along the way was the farthest thing from my mind
-          growing up. If wasn't until I was in college, before I gave it any
-          thought at all. After learning about factory farms and processing, my
-          girlfriend (now wife) started our own garden in the backyard. It started small, and grew, and grew.
-        </p>
-
+          growing up. It wasn't until I was in college before I gave it any
+          thought at all. After learning about factory farms and meat processing my
+          girlfriend (now wife) and I started our own garden in the backyard. It started small, and grew, and grew.
+          </p>
         <img className="homeImg" src={require("./images/chicks.jpg")} ></img>
         <p className="text-left">Then it got real, my wife ordered some chickens….</p>
       </div>
