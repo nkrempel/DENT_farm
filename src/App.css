@@ -44,8 +44,10 @@
   width: 400px;
   height: 400px;
 }
-.ord-entry-ctn {
-  margin-top: 20px;
+.egg-chars, .ref-date {
+  /* margin-left: 20px;
+  align-items: center; */
+  justify-content: center;
 }
 .orders-card-body {
   height: 400px;
@@ -54,4 +56,18 @@
 }
 .radFilterBy {
   margin: 10px;
+}
+.complete-btn {
+  margin-right: 5px;
+}
+
+.trans-card-body {
+  height: 400px;
+  overflow: auto;
+  background-color: antiquewhite;
+  padding: 5px;
+}
+.trans-form-body {
+  background-color: antiquewhite;
+  padding: 5px;
 }

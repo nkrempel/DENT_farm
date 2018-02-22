@@ -4,12 +4,16 @@ import {
   Link,
   Route,
   NavLink
+  NavLink,
+  Switch
 } from 'react-router-dom';
 import Home from './Home';
 import Tracker from './Tracker';
 import Inventory from './Inventory';
 import Orders from './Orders';
 import Workers from './Workers';
+import WorkerDetail from './WorkerDetail';
+import NewWorkerForm from './NewWorkerForm';
 import './App.css';
 
 
@@ -39,11 +43,15 @@ class App extends Component {
             </ul>
             </div>
             <div className="col-9 " >
+            <Switch>
               <Route exact path="/" component={Home} />
-              <Route path="/workers" component={Workers} />
+              <Route exact path="/workers" component={Workers} />
+              <Route exact path="/workers/add" component={NewWorkerForm} />
+              <Route path="/workers/:id" component={WorkerDetail} />
               <Route path="/tracker" component={Tracker} />
               <Route path="/inventory" component={Inventory} />
               <Route path="/orders" component={Orders} />
+            </Switch>
             </div>  
           </div>
       </div>
